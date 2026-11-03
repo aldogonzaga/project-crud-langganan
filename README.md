@@ -1,66 +1,83 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# SubTrack &bull; Pelacak Langganan & Uji Coba Gratis
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A modern, responsive full-stack **Subscription & Free Trial Tracker** CRUD web application built with **Laravel 12** and **Bootstrap 5.3**. Designed based on the UI/UX concepts in `refference/KeikiSpace (2).html` but styled with a **clean, modern fintech palette** (Deep Indigo, Slate Navy, Emerald, and Amber — zero pink theme), dark/light mode toggle, and rich interactive data visualizations using **Chart.js**.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🌟 Key Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 1. 🔐 User Authentication & Profile Preferences
+- **Registration & Login**: Secure authentication with password hashing and session management.
+- **1-Click Demo Login**: Pre-seeded demo account (`demo@example.com` / `password123`) loaded with 13 realistic subscriptions (Spotify, Netflix, Prime, Adobe Creative Cloud, GitHub Copilot, Gym, JetBrains, Figma Free Trial, etc.).
+- **Multi-Currency Support**: Choose preferred currency symbol (`$`, `Rp`, `€`, `£`, `¥`) in settings; all totals, monthly calculations, and charts adapt automatically.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 2. 📊 Core Dashboard & Metrics
+- **Total Monthly Spend**: Calculates normalized monthly cost (accurately converting Weekly `* 52 / 12`, Monthly, and Yearly `/ 12` cycles).
+- **Projected Annual Spend**: Automatic 12-month expenditure projection.
+- **Urgent Payment Alert Banner**: Triggered dynamically when any subscription is due within ≤ 3 days or overdue.
+- **Specialized View: "Payments Due in Next 7 Days"**: Chronological timeline of upcoming renewals.
+- **Free Trials Watchdog**: Dedicated countdown widget with visual progress bars.
 
-## Learning Laravel
+### 3. 🔁 Full CRUD Management
+- **Create**: Add new subscriptions with service name, cost, cycle, next billing date, category, status, icon/emoji, and notes. Includes live monthly/annual cost preview calculator and preset autofill buttons.
+- **Read**:
+  - **Card Grid View**: Modern squircle cards with icons, price, renewal schedule, and quick action dropdowns.
+  - **Table View**: Comprehensive data table with sorting and filtering indicators.
+- **Update**: Modify prices (for rate hikes), update billing cycles, change status from Free Trial to Active, or mark Cancelled.
+- **Delete & Soft Deletes**:
+  - **Status "Cancelled"**: Keeps the subscription in your history for reference but stops adding to monthly expenses.
+  - **Soft Delete to Trash**: Move unwanted records to Trash with full **Restore** and **Permanent Delete** capabilities.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 4. 🚀 Level-Up Portfolio Capabilities
+- **Filtering & Sorting**:
+  - Filter by **Category** (*Entertainment, Utilities, Health, Work, Education, Food, Shopping, Others*).
+  - Filter by **Status** (*All, Active, Free Trial, Cancelled*).
+  - Filter by **Billing Cycle** (*Monthly, Yearly, Weekly*).
+  - Search by service name and notes.
+  - Sort by: *Renewal Date (Soonest)*, *Highest Cost*, *Lowest Cost*, *Name (A-Z)*, *Recently Added*.
+- **Visualizations (Chart.js)**:
+  - **Spending by Category**: Interactive doughnut chart with legend, amounts, and budget percentages.
+  - **Billing Cycle Distribution**: Frequency bar chart comparing Monthly vs Yearly vs Weekly commitments.
+  - **Top 5 Expenses Ranking**: Identifies services with the highest impact on your monthly budget.
+  - **Cancellation Savings Impact**: Calculates estimated monthly and annual money saved by cancelling inactive services.
+- **Date Logic & Urgency Highlighting**:
+  - **Red / Danger (`card-critical`)**: Subscriptions due within **≤ 3 days** or overdue.
+  - **Yellow / Warning (`card-warning`)**: Subscriptions due within **4 to 7 days**.
+  - **Normal**: Renewals due in > 7 days.
+- **Light & Dark Mode**: Persistent theme switcher stored in `localStorage`.
+- **Mobile Responsive**: Includes desktop sticky sidebar and mobile bottom navigation bar (`.mobile-bottom-nav`).
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🛠️ Tech Stack
+- **Backend**: Laravel 12.x, PHP 8.2+
+- **Database**: SQLite (or MySQL)
+- **Frontend**: Bootstrap 5.3.3, Bootstrap Icons 1.11.3, Google Fonts (*Plus Jakarta Sans*)
+- **Data Visualizations**: Chart.js v4.4.2
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🚀 Getting Started
 
-### Premium Partners
+### 1. Start Local Server
+Run the Laravel development server:
+```bash
+php artisan serve
+```
+Open your browser at: `http://127.0.0.1:8000`
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### 2. Demo Account Credentials
+- **Email**: `demo@example.com`
+- **Password**: `password123`
+*(Or click the "1-Click Demo Login" button directly on the login page)*
 
-## Contributing
+### 3. Re-seed Database (Optional)
+To reset and re-seed the sample subscriptions:
+```bash
+php artisan db:seed
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 4. Run Verification Tests
+```bash
+php tests/verify.php
+```
