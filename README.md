@@ -1,278 +1,220 @@
-# 💳 SubTrack &bull; Subscription & Free Trial Tracker
+# 💳 SubTrack &bull; Tracker Langganan &amp; Free Trial
 
-A modern, responsive full-stack **Subscription & Free Trial Tracker** CRUD web application built with **Laravel 12** and **Bootstrap 5.3**. 
+Aplikasi web **CRUD Tracker Langganan &amp; Free Trial** modern, responsif, full‑stack yang dibangun dengan **Laravel 12** dan **Bootstrap 5.3**.
 
-SubTrack solves a real-world financial problem: keeping track of recurring subscriptions (Netflix, Spotify, cloud storage, gym memberships, dev tools) and managing free trials before they auto-renew and charge your card. Designed with a clean, modern fintech palette (**Deep Indigo, Slate Navy, Emerald, and Amber** — zero pink theme), dark/light mode toggle, and rich interactive data visualizations using **Chart.js**.
+SubTrack menyelesaikan masalah keuangan nyata: mengelola langganan berulang (Netflix, Spotify, penyimpanan cloud, keanggotaan gym, alat pengembang) dan mengawasi free trial sebelum otomatis memperbarui dan menagih kartu Anda. Dirancang dengan palet fintech bersih dan modern (**Deep Indigo, Slate Navy, Emerald, dan Amber** — tanpa tema pink), dukungan mode gelap/terang, serta visualisasi data interaktif menggunakan **Chart.js**.
 
 ---
 
-## 🌟 Key Features
+## 🌟 Fitur Utama
 
-### 1. 🔐 Authentication & User Functions
-- **Registration & Sign In**: Full auth pipeline with input validation, bcrypt password hashing, and remember-me session management.
-- **1-Click Demo Login**: Pre-seeded demo account (`demo@example.com` / `password123`) loaded with 13 realistic services.
-- **Multi-Currency Support**: Switch between `$`, `Rp`, `€`, `£`, and `¥` in user settings; all totals, monthly calculations, and charts adapt automatically.
-- **Budget Goal Tracking**: Set a monthly subscription budget ceiling and monitor budget usage in real time.
-- **Strict Data Privacy**: Full user isolation — each user only accesses their own subscriptions.
+### 1. 🔐 Otentikasi & Fungsi Pengguna
+- **Registrasi & Masuk**: Alur otentikasi lengkap dengan validasi input, hashing password bcrypt, dan manajemen sesi *remember‑me*.
+- **Login Demo 1‑Klik**: Akun demo yang sudah di‑seed (`demo@example.com` / `password123`) berisi 13 layanan realistis.
+- **Dukungan Multi‑Currency**: Beralih antara `$`, `Rp`, `€`, `£`, dan `¥` di pengaturan pengguna; semua total, perhitungan bulanan, dan diagram menyesuaikan secara otomatis.
+- **Pelacakan Anggaran**: Tetapkan batas anggaran bulanan dan pantau penggunaan anggaran secara real‑time.
+- **Privasi Data Ketat**: Isolasi pengguna penuh — setiap pengguna hanya dapat mengakses langganannya sendiri.
 
-### 2. 📊 Dashboard & Financial Intelligence
-- **Total Monthly Spend**: Calculates normalized monthly spend across mixed billing cycles (Weekly `× 52 ÷ 12`, Monthly, and Yearly `÷ 12`).
-- **Projected Annual Spend**: Automatic 12-month expenditure projection.
-- **Urgent Payment Alert Banner**: Triggered dynamically when any subscription is due within **≤ 3 days** or overdue.
-- **Specialized View: "Payments Due in Next 7 Days"**: Chronological timeline of upcoming renewal deadlines.
-- **Free Trials Watchdog Widget**: Countdown tracker with elapsed visual progress bars.
-- **Budget Threshold Meter**: Visual indicator showing percent of monthly budget used (`✓ On track`, `⚡ Warning`, or `⚠ Over budget`).
+### 2. 📊 Dashboard & Intelijen Keuangan
+- **Total Pengeluaran Bulanan**: Menghitung pengeluaran bulanan ternormalkan dari siklus penagihan campuran (Mingguan `× 52 ÷ 12`, Bulanan, Tahunan `÷ 12`).
+- **Proyeksi Pengeluaran Tahunan**: Proyeksi otomatis selama 12 bulan.
+- **Banner Peringatan Pembayaran Mendesak**: Muncul secara dinamis ketika ada langganan yang jatuh tempo dalam **≤ 3 hari** atau terlambat.
+- **Tampilan Khusus: "Pembayaran Jatuh Tempo 7 Hari Berikutnya"**: Timeline kronologis tenggat pembaruan yang akan datang.
+- **Widget Free Trial Watchdog**: Pelacak hitung mundur dengan bar progres visual.
+- **Meter Batas Anggaran**: Indikator visual persentase penggunaan anggaran bulanan (`✓ On track`, `⚡ Warning`, atau `⚠ Over budget`).
 
-### 3. 🔁 Full CRUD & Life-Cycle Management
-- **Create**: Add new subscriptions with service name, price, cycle, next billing date, category, status, icon/emoji, and notes. Includes live monthly/annual cost preview calculator and 1-click popular presets (Spotify, Netflix, Copilot, Gym, etc.).
+### 3. 🔁 CRUD & Manajemen Siklus Hidup Lengkap
+- **Create**: Tambahkan langganan baru dengan nama layanan, harga, siklus, tanggal penagihan berikutnya, kategori, status, ikon/emoji, dan catatan. Menyertakan kalkulator pratinjau biaya bulanan/tahunan dan preset 1‑klik (Spotify, Netflix, Copilot, Gym, dll.).
 - **Read**:
-  - **Card Grid View**: Modern squircle cards with icons, price, renewal schedule, and quick action dropdowns.
-  - **Table View**: Comprehensive data table with status pills, sorting, and filter indicators.
-- **Update**: Modify rates when services announce price hikes, change billing cycles, or convert status.
-- **1-Click Renewal ("Mark as Paid")**: Advances the billing date by +1 cycle (Weekly `+1 week`, Monthly `+1 month`, Yearly `+1 year`) with a single click.
+  - **Tampilan Card Grid**: Kartu modern berbentuk squircle dengan ikon, harga, jadwal pembaruan, dan dropdown aksi cepat.
+  - **Tampilan Table**: Tabel data lengkap dengan label status, penyortiran, dan indikator filter.
+- **Update**: Ubah tarif ketika layanan mengumumkan kenaikan harga, ubah siklus penagihan, atau ubah status.
+- **1‑Click Renewal ("Mark as Paid")**: Memajukan tanggal penagihan +1 siklus (Mingguan `+1 week`, Bulanan `+1 month`, Tahunan `+1 year`) dengan satu klik.
 - **Delete & Soft Deletes**:
-  - **Status "Cancelled"**: Stops adding to monthly expenses while preserving full history for reference.
-  - **Soft Delete (Trash)**: Move records to Trash with full **Restore** and **Permanent Delete** capabilities.
+  - **Status "Cancelled"**: Menghentikan penambahan ke total pengeluaran bulanan sambil mempertahankan riwayat lengkap.
+  - **Soft Delete (Trash)**: Pindahkan catatan ke Trash dengan kemampuan **Restore** dan **Permanent Delete**.
 
-### 4. 🚀 Level-Up Portfolio Capabilities
-- **Filtering & Sorting**:
-  - Filter by **Category** (*Entertainment, Utilities, Health, Work, Education, Food, Shopping, Others*).
-  - Filter by **Status** (*All, Active, Free Trial, Cancelled*).
-  - Filter by **Billing Cycle** (*Monthly, Yearly, Weekly*).
-  - Search by service name and notes.
-  - Sort by: *Renewal Date (Soonest)*, *Highest Cost*, *Lowest Cost*, *Name (A-Z)*, *Recently Added*.
-- **Interactive Visualizations (Chart.js)**:
-  - **Spending by Category**: Interactive doughnut chart with legend, amounts, and budget percentages.
-  - **Billing Cycle Distribution**: Frequency bar chart comparing Monthly vs Yearly vs Weekly commitments.
-  - **Top 5 Expenses Ranking**: Identifies the biggest drivers of monthly subscription spending.
-  - **Cancellation Savings Impact**: Calculates estimated monthly and annual savings from cancelled services.
-- **Date Logic & Urgency Highlights**:
-  - **🔴 Red / Danger (`card-critical`)**: Subscriptions due within **≤ 3 days** or overdue.
-  - **🟡 Yellow / Warning (`card-warning`)**: Subscriptions due within **4 to 7 days**.
-  - **Normal**: Renewals due in > 7 days.
-- **Data Export**: 1-click **Export to CSV** for spreadsheets (Excel / Google Sheets).
-- **Light & Dark Mode**: Persistent theme switcher stored in `localStorage`.
-- **Keyboard Shortcuts**: Press `N` for Quick Add, `/` to focus search, and `D` to toggle dark mode.
-- **Responsive Design**: Desktop sticky sidebar + mobile bottom navigation bar (`.mobile-bottom-nav`).
+### 4. 🚀 Tingkatkan Portofolio
+- **Filter & Penyortiran**:
+  - Filter berdasarkan **Kategori** (Entertainment, Utilities, Health, Work, Education, Food, Shopping, Others).
+  - Filter berdasarkan **Status** (All, Active, Free Trial, Cancelled).
+  - Filter berdasarkan **Siklus Penagihan** (Monthly, Yearly, Weekly).
+  - Pencarian berdasarkan nama layanan dan catatan.
+  - Penyortiran: *Renewal Date (Soonest)*, *Highest Cost*, *Lowest Cost*, *Name (A‑Z)*, *Recently Added*.
+- **Visualisasi Interaktif (Chart.js)**:
+  - **Spending by Category**: Diagram donat interaktif dengan legenda, jumlah, dan persentase anggaran.
+  - **Billing Cycle Distribution**: Diagram batang frekuensi membandingkan komitmen Monthly vs Yearly vs Weekly.
+  - **Top 5 Expenses Ranking**: Mengidentifikasi pengeluaran terbesar bulanan.
+  - **Cancellation Savings Impact**: Menghitung estimasi tabungan bulanan dan tahunan dari layanan yang dibatalkan.
+- **Logika Tanggal & Penyorotan Urgensi**:
+  - **🔴 Merah / Danger (`card-critical`)**: Langganan yang jatuh tempo dalam **≤ 3 hari** atau terlambat.
+  - **🟡 Kuning / Warning (`card-warning`)**: Langganan yang jatuh tempo dalam **4‑7 hari**.
+  - **Normal**: Pembaruan yang jatuh tempo lebih dari 7 hari.
+- **Ekspor Data**: 1‑klik **Export to CSV** untuk spreadsheet (Excel / Google Sheets).
+- **Mode Light & Dark**: Pengalih tema persisten yang disimpan di `localStorage`.
+- **Shortcut Keyboard**: Tekan `N` untuk *Quick Add*, `/` untuk fokus pencarian, dan `D` untuk beralih ke mode gelap.
+- **Desain Responsif**: Sidebar lengket di desktop + navigasi bawah seluler (`.mobile-bottom-nav`).
 
 ---
 
-## 🛠️ Tech Stack & Requirements
+## 🛠️ Teknologi & Persyaratan
 
-- **PHP**: `^8.2` or higher (tested on PHP 8.2 - 8.5)
+- **PHP**: `^8.2` atau lebih tinggi (diuji pada PHP 8.2 – 8.5)
 - **Framework**: [Laravel 12.x](https://laravel.com)
-- **Database**: MySQL / MariaDB (e.g. XAMPP) or SQLite
+- **Database**: MySQL / MariaDB (mis. XAMPP)
 - **Frontend**: Bootstrap 5.3.3, Bootstrap Icons 1.11.3, Google Fonts (*Plus Jakarta Sans*)
-- **Charts**: Chart.js 4.4.2
+- **Chart**: Chart.js 4.4.2
 - **Composer**: `^2.0`
 
 ---
 
-## 📥 Installation & Setup Guide
+## 📥 Instalasi & Panduan Setup
 
-Follow these steps to clone, configure, and run the project locally.
+Ikuti langkah‑langkah berikut untuk meng‑clone, mengkonfigurasi, dan menjalankan proyek secara lokal.
 
-### 1. Clone the Repository
+### 1. Clone Repository
 ```bash
 git clone https://github.com/your-username/crud-langganan.git
 cd crud-langganan
 ```
 
-### 2. Install PHP Dependencies
+### 2. Instal Dependensi PHP
 ```bash
 composer install
 ```
 
-### 3. Configure Environment File
-Copy the example `.env` file:
+### 3. Konfigurasi File Lingkungan
+Salin file contoh `.env`:
 ```bash
-# On Linux/macOS
-cp .env.example .env
-
-# On Windows (PowerShell)
+# Pada Windows (PowerShell)
 copy .env.example .env
 ```
 
-Generate the application encryption key:
+Generate kunci enkripsi aplikasi:
 ```bash
 php artisan key:generate
 ```
 
-### 4. Database Setup
+### 4. Penyiapan Database
+#### Pilihan A: MySQL (mis. XAMPP)
+1. Jalankan Apache & MySQL di XAMPP.
+2. Buat basis data kosong di phpMyAdmin atau terminal:
+```sql
+CREATE DATABASE `crud-langganan`;
+```
+3. Perbarui `.env` dengan detail MySQL Anda:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=crud-langganan
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-Choose either **MySQL** or **SQLite**:
-
-#### Option A: MySQL (e.g. XAMPP)
-1. Start Apache & MySQL in XAMPP.
-2. Create an empty database in phpMyAdmin or terminal:
-   ```sql
-   CREATE DATABASE `crud-langganan`;
-   ```
-3. Update `.env`:
-   ```env
-   DB_CONNECTION=mysql
-   DB_HOST=127.0.0.1
-   DB_PORT=3306
-   DB_DATABASE=crud-langganan
-   DB_USERNAME=root
-   DB_PASSWORD=
-   ```
-
-#### Option B: SQLite (Zero configuration)
-1. Create the SQLite file:
-   ```bash
-   # On Windows (PowerShell)
-   New-Item -ItemType File -Force -Path database\database.sqlite
-
-   # On Linux/macOS
-   touch database/database.sqlite
-   ```
-2. Update `.env`:
-   ```env
-   DB_CONNECTION=sqlite
-   # Comment out DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, DB_PASSWORD
-   ```
-
-### 5. Run Migrations & Seed Demo Data
-Run the database migrations and seed the demo account with realistic sample subscriptions:
+### 5. Jalankan Migrasi & Seed Data Demo
 ```bash
 php artisan migrate --seed
 ```
 
-### 6. Start the Development Server
+### 6. Mulai Server Pengembangan
 ```bash
 php artisan serve
 ```
-
-Visit the application in your browser at:
+Buka aplikasi di peramban Anda pada:
 👉 **`http://127.0.0.1:8000`**
 
 ---
 
-## 🔑 Demo Account Credentials
+## 🔑 Kredensial Akun Demo
+Gunakan kredensial berikut atau klik tombol **"1‑Click Demo Login"** pada halaman masuk:
 
-Use these preloaded credentials or click the **"1-Click Demo Login"** button on the login page:
-
-| Role | Email | Password | Preloaded Data |
+| Peran | Email | Kata Sandi | Data Pramuat |
 |---|---|---|---|
-| **Demo User** | `demo@example.com` | `password123` | 13 Subscriptions (Active, Free Trials, Cancelled, Weekly, Yearly) |
-| **Test User** | `test@example.com` | `password` | Clean account for custom testing |
+| **Demo User** | `demo@example.com` | `password123` | 13 Langganan (Active, Free Trials, Cancelled, Weekly, Yearly) |
+| **Test User** | `test@example.com` | `password` | Akun bersih untuk pengujian kustom |
 
 ---
 
-## 🧪 Running Automated Tests
-
-The repository includes comprehensive verification test suites covering authentication, CRUD, date logic, calculations, and multi-tenant security:
+## 🧪 Menjalankan Tes Otomatis
+Repository menyertakan rangkaian tes verifikasi lengkap yang mencakup otentikasi, CRUD, logika tanggal, perhitungan, dan keamanan multi‑tenant:
 
 ```bash
-# 1. Run full HTTP authentication & session workflow test
+# 1. Tes otentikasi HTTP & alur sesi lengkap
 php tests/test_http_auth.php
 
-# 2. Run user functions, password hashing & data isolation test
+# 2. Tes fungsi pengguna, hashing password & isolasi data
 php tests/test_auth_and_user.php
 
-# 3. Run comprehensive 8-point system verification suite
+# 3. Suite verifikasi sistem 8‑point lengkap
 php tests/verify.php
 ```
-
-All suites should pass with `0 failures`.
+Semua suite harus lulus dengan `0 failures`.
 
 ---
 
-## 📂 Project Architecture
-
+## 📂 Arsitektur Proyek
 ```
 crud-langganan/
 ├── app/
 │   ├── Http/
 │   │   └── Controllers/
-│   │       ├── AnalyticsController.php     # Chart.js metrics & savings calculations
-│   │       ├── AuthController.php          # Login, Register, 1-Click Demo, Logout
-│   │       ├── DashboardController.php      # Metrics, upcoming payments, budget tracking
-│   │       ├── ProfileController.php        # Name, email, currency, budget, password
-│   │       ├── SubscriptionController.php   # Full CRUD, CSV export, 1-click renewal
-│   │       └── TrialController.php          # Dedicated free trials watchdog & cancel actions
+│   │       ├── AnalyticsController.php     # Metrix Chart.js & perhitungan penghematan
+│   │       ├── AuthController.php          # Login, Register, Demo 1‑Klik, Logout
+│   │       ├── DashboardController.php      # Metrix, pembayaran mendatang, pelacakan anggaran
+│   │       ├── ProfileController.php        # Nama, email, mata uang, anggaran, password
+│   │       ├── SubscriptionController.php   # CRUD lengkap, ekspor CSV, renewal 1‑klik
+│   │       └── TrialController.php          # Pengelola free trial & aksi pembatalan
 │   └── Models/
-│       ├── Subscription.php                 # Scopes, monthly normalization, date urgency logic
-│       └── User.php                         # Auth, currency formatter, budget casts, relationships
+│       ├── Subscription.php                 # Scopes, normalisasi bulanan, logika urgensi tanggal
+│       └── User.php                         # Auth, formatter mata uang, casts anggaran, relasi
 ├── database/
 │   ├── migrations/                          # Users, currency, subscriptions, monthly budget
-│   └── seeders/DatabaseSeeder.php           # Pre-seeds Demo user with 13 realistic services
+│   └── seeders/DatabaseSeeder.php           # Pre‑seed akun Demo dengan 13 layanan realistis
 ├── resources/
 │   └── views/
 │       ├── layouts/
-│       │   ├── app.blade.php                # Master layout with sidebar, theme toggle, quick add modal
-│       │   └── auth.blade.php               # Clean authentication layout
-│       ├── auth/                            # Login & Register views
-│       ├── dashboard/index.blade.php        # Dashboard overview & summary charts
+│       │   ├── app.blade.php                # Layout master dengan sidebar, toggle tema, modal quick add
+│       │   └── auth.blade.php               # Layout bersih untuk otentikasi
+│       ├── auth/                            # Tampilan Login & Register
+│       ├── dashboard/index.blade.php        # Ringkasan dashboard & diagram
 │       ├── subscriptions/                   # Index (Cards/Table), Create, Edit, Show, Trash
-│       ├── trials/index.blade.php           # Free Trials Watchdog manager
-│       ├── analytics/index.blade.php        # Deep visual analytics & spending distribution
-│       └── profile/edit.blade.php           # Settings, currency selection & password update
+│       ├── trials/index.blade.php           # Manajer free trial watchdog
+│       ├── analytics/index.blade.php        # Analitik visual mendalam & distribusi pengeluaran
+│       └── profile/edit.blade.php           # Pengaturan, pilihan mata uang & pembaruan password
 ├── routes/
-│   └── web.php                              # Web routes with auth middleware & RESTful resources
-└── tests/                                   # Standalone automated test runners
+│   └── web.php                              # Rute web dengan middleware auth & sumber daya RESTful
+└── tests/                                   # Runner tes otomatis standalone
 ```
 
 ---
 
-## 🧭 Key Routes Reference
-
-| Method | URI | Action / Controller | Description |
+## 🧭 Referensi Rute Utama
+| Metode | URI | Aksi / Controller | Deskripsi |
 |---|---|---|---|
-| `GET` | `/login` | `AuthController@showLogin` | Sign in form |
-| `POST` | `/login` | `AuthController@login` | Authenticate user credentials |
-| `GET` | `/demo-login` | `AuthController@quickDemoLogin` | 1-Click test login |
-| `GET` | `/register` | `AuthController@showRegister` | Registration form |
-| `POST` | `/logout` | `AuthController@logout` | Sign out current user |
-| `GET` | `/dashboard` | `DashboardController@index` | Main dashboard & metrics |
-| `GET` | `/subscriptions` | `SubscriptionController@index` | Browse subscriptions (table/cards) |
-| `POST` | `/subscriptions` | `SubscriptionController@store` | Create new subscription |
-| `GET` | `/subscriptions/{id}` | `SubscriptionController@show` | View subscription details |
-| `PUT` | `/subscriptions/{id}` | `SubscriptionController@update` | Update price/dates/status |
-| `DELETE` | `/subscriptions/{id}` | `SubscriptionController@destroy` | Soft-delete to Trash |
-| `POST` | `/subscriptions/{id}/renew`| `SubscriptionController@renew` | Mark as paid & advance 1 cycle |
-| `GET` | `/subscriptions/export/csv` | `SubscriptionController@exportCsv`| Download CSV file |
-| `GET` | `/subscriptions/trash` | `SubscriptionController@trash` | Trashed records view |
-| `POST` | `/subscriptions/{id}/restore`| `SubscriptionController@restore`| Restore from Trash |
-| `GET` | `/trials` | `TrialController@index` | Dedicated Free Trials Watchdog |
-| `PATCH`| `/trials/{id}/cancel` | `TrialController@cancel` | Cancel trial immediately |
-| `GET` | `/analytics` | `AnalyticsController@index` | Interactive Chart.js analytics |
-| `GET` | `/profile` | `ProfileController@edit` | Account settings & currency |
-| `PUT` | `/profile/budget` | `ProfileController@updateBudget` | Update monthly budget limit |
+| `GET` | `/login` | `AuthController@showLogin` | Formulir masuk |
+| `POST` | `/login` | `AuthController@login` | Otentikasi kredensial pengguna |
+| `GET` | `/demo-login` | `AuthController@quickDemoLogin` | Login demo 1‑klik |
+| `GET` | `/register` | `AuthController@showRegister` | Formulir registrasi |
+| `POST` | `/logout` | `AuthController@logout` | Keluar dari pengguna saat ini |
+| `GET` | `/dashboard` | `DashboardController@index` | Dashboard utama & metrik |
+| `GET` | `/subscriptions` | `SubscriptionController@index` | Telusuri langganan (tabel/kartu) |
+| `POST` | `/subscriptions` | `SubscriptionController@store` | Buat langganan baru |
+| `GET` | `/subscriptions/{id}` | `SubscriptionController@show` | Lihat detail langganan |
+| `PUT` | `/subscriptions/{id}` | `SubscriptionController@update` | Update harga/tanggal/status |
+| `DELETE` | `/subscriptions/{id}` | `SubscriptionController@destroy` | Soft‑delete ke Trash |
+| `POST` | `/subscriptions/{id}/renew` | `SubscriptionController@renew` | Tandai sebagai dibayar & maju 1 siklus |
+| `GET` | `/subscriptions/export/csv` | `SubscriptionController@exportCsv` | Unduh file CSV |
+| `GET` | `/subscriptions/trash` | `SubscriptionController@trash` | Tampilan catatan ter‑trash |
+| `POST` | `/subscriptions/{id}/restore` | `SubscriptionController@restore` | Pulihkan dari Trash |
+| `GET` | `/trials` | `TrialController@index` | Pengawas Free Trial khusus |
+| `PATCH` | `/trials/{id}/cancel` | `TrialController@cancel` | Batalkan trial segera |
+| `GET` | `/analytics` | `AnalyticsController@index` | Analitik Chart.js interaktif |
+| `GET` | `/profile` | `ProfileController@edit` | Pengaturan akun & mata uang |
+| `PUT` | `/profile/budget` | `ProfileController@updateBudget` | Perbarui batas anggaran bulanan |
 
 ---
 
-## 🤝 Contributing & Extending
+## 📄 Lisensi
 
-Contributions are welcome! If you'd like to work on this project or use it as a foundation for your own portfolio:
-
-### Development Workflow
-1. **Fork** the repository.
-2. Create a feature branch:
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-3. Commit your changes:
-   ```bash
-   git commit -m "feat: add reminder notification via email"
-   ```
-4. Run tests to ensure everything remains green:
-   ```bash
-   php tests/verify.php
-   ```
-5. Push to your branch and open a **Pull Request**.
-
-### Ideas for Future Enhancements
-- [ ] **Email Notifications**: Scheduled automated email alerts 3 days before renewal dates using Laravel Queues & Mailables.
-- [ ] **Live Currency Exchange Rates**: Integration with an exchange rate API to convert multi-currency subscriptions into a single base currency.
-- [ ] **PDF Statement Export**: Generate printable monthly spending statements using DomPDF.
-- [ ] **PWA / Web Push Notifications**: Service worker notifications when opening the app near due dates.
-- [ ] **Custom Category Management**: Allow users to add, edit, or customize their own categories and icon colors.
-
----
-
-## 📄 License
-
-This open-source project is licensed under the [MIT License](LICENSE).
-Feel free to use it for learning, portfolio showcases, or personal finance tracking!
+Proyek sumber terbuka ini dilisensikan di bawah [Lisensi MIT](LICENSE). Anda bebas menggunakannya untuk belajar, showcase portofolio, atau pelacakan keuangan pribadi!
