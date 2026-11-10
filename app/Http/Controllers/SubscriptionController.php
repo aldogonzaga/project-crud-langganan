@@ -75,7 +75,7 @@ class SubscriptionController extends Controller
             'next_billing_date' => ['required', 'date'],
             'category' => ['required', 'string', 'max:50'],
             'status' => ['required', 'in:Active,Free Trial,Cancelled'],
-            'icon' => ['nullable', 'string', 'max:20'],
+            'icon' => ['nullable', 'string', 'max:50'],
             'notes' => ['nullable', 'string', 'max:1000'],
         ]);
 
@@ -123,7 +123,7 @@ class SubscriptionController extends Controller
             'next_billing_date' => ['required', 'date'],
             'category' => ['required', 'string', 'max:50'],
             'status' => ['required', 'in:Active,Free Trial,Cancelled'],
-            'icon' => ['nullable', 'string', 'max:20'],
+            'icon' => ['nullable', 'string', 'max:50'],
             'notes' => ['nullable', 'string', 'max:1000'],
         ]);
 

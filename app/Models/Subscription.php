@@ -109,24 +109,54 @@ class Subscription extends Model
     }
 
     /**
-     * Smart category icon fallback if no icon provided.
+     * Smart category icon fallback if no icon provided or map existing emojis to Bootstrap icons.
      */
     public function getDisplayIconAttribute(): string
     {
-        if (!empty($this->icon)) {
-            return $this->icon;
+        $icon = $this->icon;
+
+        if (empty($icon)) {
+            return match ($this->category) {
+                'Entertainment' => 'bi-film',
+                'Utilities' => 'bi-lightning-charge',
+                'Health' => 'bi-heart-pulse',
+                'Work' => 'bi-laptop',
+                'Education' => 'bi-book',
+                'Food' => 'bi-cup-hot',
+                'Shopping' => 'bi-bag',
+                default => 'bi-tag',
+            };
         }
 
-        return match ($this->category) {
-            'Entertainment' => '🎬',
-            'Utilities' => '⚡',
-            'Health' => '🏋️',
-            'Work' => '💻',
-            'Education' => '📚',
-            'Food' => '🥗',
-            'Shopping' => '🛍️',
-            default => '✨',
+        // Map any legacy emojis to Bootstrap icons
+        return match ($icon) {
+            '🎵' => 'bi-music-note-beamed',
+            '🎬' => 'bi-film',
+            '💻' => 'bi-laptop',
+            '🏋️', '🏋' => 'bi-heart-pulse',
+            '⚡' => 'bi-lightning-charge',
+            '☁️', '☁' => 'bi-cloud',
+            '📚' => 'bi-book',
+            '🥗' => 'bi-cup-hot',
+            '🛍️', '🛍' => 'bi-bag',
+            '⏳' => 'bi-hourglass-split',
+            '✨' => 'bi-stars',
+            default => $icon,
         };
+    }
+
+    /**
+     * Render the icon as HTML (Bootstrap icon <i> or fallback).
+     */
+    public function getRenderedIconAttribute(): string
+    {
+        $icon = $this->display_icon;
+        if (str_starts_with($icon, 'bi-') || str_starts_with($icon, 'bi ')) {
+            $class = str_starts_with($icon, 'bi ') ? $icon : 'bi ' . $icon;
+            return '<i class="' . e($class) . '"></i>';
+        }
+
+        return e($icon);
     }
 
     /**

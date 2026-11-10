@@ -62,7 +62,7 @@ class User extends Authenticatable
     public function formatCurrency(float|int|string|null $amount): string
     {
         $amount = (float) ($amount ?? 0);
-        $curr = $this->currency ?? '$';
+        $curr = $this->currency ?? 'Rp';
 
         if (trim($curr) === 'Rp') {
             return 'Rp ' . number_format($amount, 0, ',', '.');

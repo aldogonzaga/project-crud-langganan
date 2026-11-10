@@ -9,22 +9,24 @@
     <div class="col-12 col-lg-8">
         <!-- Quick Preset Suggestions -->
         <div class="card-custom mb-4 p-3">
-            <span class="small text-muted fw-semibold d-block mb-2">⚡ Quick Autofill Presets:</span>
+            <span class="small text-muted fw-semibold d-block mb-2">
+                <i class="bi bi-lightning-charge-fill text-warning me-1"></i> Quick Autofill Presets:
+            </span>
             <div class="d-flex flex-wrap gap-2">
-                <button type="button" class="btn btn-sm btn-theme-secondary py-1 px-3" onclick="fillPreset('Spotify Premium', 10.99, 'Monthly', 'Entertainment', 'Active', '🎵')">
-                    🎵 Spotify ($10.99)
+                <button type="button" class="btn btn-sm btn-theme-secondary py-1 px-3" onclick="fillPreset('Spotify Premium', 54990, 'Monthly', 'Entertainment', 'Active', 'bi-spotify')">
+                    <i class="bi bi-spotify me-1 text-success"></i> Spotify (Rp 54.990)
                 </button>
-                <button type="button" class="btn btn-sm btn-theme-secondary py-1 px-3" onclick="fillPreset('Netflix Standard', 15.49, 'Monthly', 'Entertainment', 'Active', '🎬')">
-                    🎬 Netflix ($15.49)
+                <button type="button" class="btn btn-sm btn-theme-secondary py-1 px-3" onclick="fillPreset('Netflix Standard', 186000, 'Monthly', 'Entertainment', 'Active', 'bi-film')">
+                    <i class="bi bi-film me-1 text-danger"></i> Netflix (Rp 186.000)
                 </button>
-                <button type="button" class="btn btn-sm btn-theme-secondary py-1 px-3" onclick="fillPreset('GitHub Copilot', 10.00, 'Monthly', 'Work', 'Active', '💻')">
-                    💻 Copilot ($10.00)
+                <button type="button" class="btn btn-sm btn-theme-secondary py-1 px-3" onclick="fillPreset('GitHub Copilot', 150000, 'Monthly', 'Work', 'Active', 'bi-github')">
+                    <i class="bi bi-github me-1"></i> Copilot (Rp 150.000)
                 </button>
-                <button type="button" class="btn btn-sm btn-theme-secondary py-1 px-3" onclick="fillPreset('Gym Membership', 45.00, 'Monthly', 'Health', 'Active', '🏋️')">
-                    🏋️ Gym ($45.00)
+                <button type="button" class="btn btn-sm btn-theme-secondary py-1 px-3" onclick="fillPreset('Gym Membership', 350000, 'Monthly', 'Health', 'Active', 'bi-heart-pulse')">
+                    <i class="bi bi-heart-pulse me-1 text-danger"></i> Gym (Rp 350.000)
                 </button>
-                <button type="button" class="btn btn-sm btn-theme-secondary py-1 px-3" onclick="fillPreset('Figma Trial', 15.00, 'Monthly', 'Work', 'Free Trial', '📐')">
-                    ⏳ Figma Trial ($15.00)
+                <button type="button" class="btn btn-sm btn-theme-secondary py-1 px-3" onclick="fillPreset('Figma Trial', 180000, 'Monthly', 'Work', 'Free Trial', 'bi-hourglass-split')">
+                    <i class="bi bi-hourglass-split me-1 text-warning"></i> Figma Trial (Rp 180.000)
                 </button>
             </div>
         </div>
@@ -49,25 +51,25 @@
                         @enderror
                     </div>
 
-                    <!-- Icon / Emoji Picker -->
+                    <!-- Icon / Bootstrap Icon Picker -->
                     <div class="col-12 col-md-4">
-                        <label for="icon" class="form-label fw-semibold small">Icon / Emoji</label>
+                        <label for="icon" class="form-label fw-semibold small">Bootstrap Icon (bi-*)</label>
                         <div class="input-group">
                             <span class="input-group-text bg-transparent border-end-0 rounded-start-4 ps-3" id="icon-preview" style="border-color: var(--bd); font-size: 1.2rem;">
-                                🎬
+                                <i class="bi bi-film"></i>
                             </span>
                             <input type="text" class="form-control form-control-custom rounded-end-4 border-start-0 ps-2 @error('icon') is-invalid @enderror" 
-                                   id="icon" name="icon" value="{{ old('icon', '🎬') }}" maxlength="10" placeholder="Emoji e.g. 🎬">
+                                   id="icon" name="icon" value="{{ old('icon', 'bi-film') }}" maxlength="50" placeholder="e.g. bi-film, bi-spotify">
                         </div>
                         <div class="d-flex gap-1 mt-1">
-                            <button type="button" class="btn btn-sm btn-light border p-0 px-1" onclick="setIcon('🎵')">🎵</button>
-                            <button type="button" class="btn btn-sm btn-light border p-0 px-1" onclick="setIcon('🎬')">🎬</button>
-                            <button type="button" class="btn btn-sm btn-light border p-0 px-1" onclick="setIcon('💻')">💻</button>
-                            <button type="button" class="btn btn-sm btn-light border p-0 px-1" onclick="setIcon('🏋️')">🏋️</button>
-                            <button type="button" class="btn btn-sm btn-light border p-0 px-1" onclick="setIcon('⚡')">⚡</button>
-                            <button type="button" class="btn btn-sm btn-light border p-0 px-1" onclick="setIcon('☁️')">☁️</button>
-                            <button type="button" class="btn btn-sm btn-light border p-0 px-1" onclick="setIcon('📚')">📚</button>
-                            <button type="button" class="btn btn-sm btn-light border p-0 px-1" onclick="setIcon('🥗')">🥗</button>
+                            <button type="button" class="btn btn-sm btn-light border p-0 px-2" onclick="setIcon('bi-music-note-beamed')" title="Music"><i class="bi bi-music-note-beamed"></i></button>
+                            <button type="button" class="btn btn-sm btn-light border p-0 px-2" onclick="setIcon('bi-film')" title="Entertainment"><i class="bi bi-film"></i></button>
+                            <button type="button" class="btn btn-sm btn-light border p-0 px-2" onclick="setIcon('bi-laptop')" title="Work"><i class="bi bi-laptop"></i></button>
+                            <button type="button" class="btn btn-sm btn-light border p-0 px-2" onclick="setIcon('bi-heart-pulse')" title="Health"><i class="bi bi-heart-pulse"></i></button>
+                            <button type="button" class="btn btn-sm btn-light border p-0 px-2" onclick="setIcon('bi-lightning-charge')" title="Utilities"><i class="bi bi-lightning-charge"></i></button>
+                            <button type="button" class="btn btn-sm btn-light border p-0 px-2" onclick="setIcon('bi-cloud')" title="Cloud"><i class="bi bi-cloud"></i></button>
+                            <button type="button" class="btn btn-sm btn-light border p-0 px-2" onclick="setIcon('bi-book')" title="Education"><i class="bi bi-book"></i></button>
+                            <button type="button" class="btn btn-sm btn-light border p-0 px-2" onclick="setIcon('bi-cup-hot')" title="Food"><i class="bi bi-cup-hot"></i></button>
                         </div>
                     </div>
 
@@ -79,7 +81,7 @@
                                 {{ Auth::user()->currency }}
                             </span>
                             <input type="number" step="0.01" min="0" class="form-control form-control-custom rounded-end-4 border-start-0 ps-2 @error('cost') is-invalid @enderror" 
-                                   id="cost" name="cost" value="{{ old('cost', '9.99') }}" required placeholder="0.00" oninput="updateCostPreview()">
+                                   id="cost" name="cost" value="{{ old('cost', '50000') }}" required placeholder="0.00" oninput="updateCostPreview()">
                         </div>
                         @error('cost')
                             <div class="text-danger small mt-1">{{ $message }}</div>
@@ -199,13 +201,27 @@
 
 @section('scripts')
 <script>
-    function setIcon(emoji) {
-        document.getElementById('icon').value = emoji;
-        document.getElementById('icon-preview').textContent = emoji;
+    function setIcon(icon) {
+        document.getElementById('icon').value = icon;
+        updateIconPreview(icon);
+    }
+
+    function updateIconPreview(icon) {
+        const preview = document.getElementById('icon-preview');
+        if (!icon) {
+            preview.innerHTML = '<i class="bi bi-tag"></i>';
+            return;
+        }
+        if (icon.startsWith('bi-') || icon.startsWith('bi ')) {
+            const cls = icon.startsWith('bi ') ? icon : 'bi ' + icon;
+            preview.innerHTML = `<i class="${cls}"></i>`;
+        } else {
+            preview.textContent = icon;
+        }
     }
 
     document.getElementById('icon').addEventListener('input', function() {
-        document.getElementById('icon-preview').textContent = this.value || '✨';
+        updateIconPreview(this.value);
     });
 
     function fillPreset(name, cost, cycle, category, status, icon) {
@@ -234,8 +250,15 @@
             yearly = cost;
         }
 
-        document.getElementById('monthly-preview').textContent = currency + monthly.toFixed(2) + ' / mo';
-        document.getElementById('yearly-preview').textContent = currency + yearly.toFixed(2) + ' / yr';
+        const fmt = (val) => {
+            if (currency.trim() === 'Rp') {
+                return 'Rp ' + Math.round(val).toLocaleString('id-ID');
+            }
+            return currency + val.toFixed(2);
+        };
+
+        document.getElementById('monthly-preview').textContent = fmt(monthly) + ' / mo';
+        document.getElementById('yearly-preview').textContent = fmt(yearly) + ' / yr';
     }
 
     function handleStatusChange() {
@@ -249,6 +272,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
+        updateIconPreview(document.getElementById('icon').value);
         updateCostPreview();
     });
 </script>

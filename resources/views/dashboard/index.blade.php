@@ -149,7 +149,7 @@
                                 
                                 <div class="d-flex align-items-center gap-3">
                                     <div class="service-icon" style="background: {{ $isCritical ? '#ffffff' : 'var(--sec)' }};">
-                                        {{ $sub->display_icon }}
+                                        {!! $sub->rendered_icon !!}
                                     </div>
                                     <div>
                                         <div class="d-flex align-items-center gap-2">
@@ -160,7 +160,7 @@
                                                 {{ $sub->category }}
                                             </span>
                                             @if($sub->status === 'Free Trial')
-                                                <span class="badge-pill-custom badge-trial">⏳ Free Trial</span>
+                                                <span class="badge-pill-custom badge-trial"><i class="bi bi-hourglass-split me-1"></i>Free Trial</span>
                                             @endif
                                         </div>
                                         <div class="small text-muted mt-1">
@@ -220,7 +220,7 @@
                     </div>
                 @else
                     <div class="text-center py-5">
-                        <div class="display-6 mb-2 text-muted">🏖️</div>
+                        <div class="display-6 mb-2 text-muted"><i class="bi bi-sun"></i></div>
                         <h6 class="fw-bold mb-1">Clear Horizon!</h6>
                         <p class="text-muted small mb-3">No payments or renewal dates due in the next 7 days.</p>
                         <a href="{{ route('subscriptions.create') }}" class="btn btn-sm btn-theme-secondary">
@@ -260,7 +260,7 @@
                                 
                                 <div class="d-flex align-items-center justify-content-between mb-2">
                                     <div class="d-flex align-items-center gap-2">
-                                        <span class="fs-5">{{ $trial->display_icon }}</span>
+                                        <span class="fs-5">{!! $trial->rendered_icon !!}</span>
                                         <span class="fw-bold">{{ $trial->name }}</span>
                                     </div>
                                     @if($isUrgent)
@@ -454,7 +454,7 @@
                                 <td>
                                     <div class="d-flex align-items-center gap-3">
                                         <div class="service-icon" style="width: 38px; height: 38px; font-size: 1.15rem;">
-                                            {{ $sub->display_icon }}
+                                            {!! $sub->rendered_icon !!}
                                         </div>
                                         <div>
                                             <a href="{{ route('subscriptions.show', $sub) }}" class="fw-bold text-decoration-none text-reset">
@@ -481,9 +481,9 @@
                                     <div>{{ $sub->next_billing_date ? $sub->next_billing_date->format('M d, Y') : '—' }}</div>
                                     @if($sub->status !== 'Cancelled')
                                         @if($dLeft <= 3)
-                                            <span class="badge-pill-custom badge-urgent-critical">🔴 Due in {{ $dLeft <= 0 ? 'Today' : $dLeft . 'd' }}</span>
+                                            <span class="badge-pill-custom badge-urgent-critical"><i class="bi bi-circle-fill text-danger me-1"></i>Due in {{ $dLeft <= 0 ? 'Today' : $dLeft . 'd' }}</span>
                                         @elseif($dLeft <= 7)
-                                            <span class="badge-pill-custom badge-urgent-warning">🟡 In {{ $dLeft }}d</span>
+                                            <span class="badge-pill-custom badge-urgent-warning"><i class="bi bi-circle-fill text-warning me-1"></i>In {{ $dLeft }}d</span>
                                         @else
                                             <span class="small text-muted">In {{ $dLeft }}d</span>
                                         @endif
@@ -515,7 +515,7 @@
             </div>
         @else
             <div class="text-center py-5">
-                <div class="display-6 mb-2 text-muted">📦</div>
+                <div class="display-6 mb-2 text-muted"><i class="bi bi-box-seam"></i></div>
                 <h6 class="fw-bold mb-1">No Subscriptions Tracked Yet</h6>
                 <p class="text-muted small mb-3">Add your first subscription to get started!</p>
                 <a href="{{ route('subscriptions.create') }}" class="btn btn-theme">

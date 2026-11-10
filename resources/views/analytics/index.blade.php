@@ -154,7 +154,7 @@
                             <div class="d-flex align-items-center gap-3">
                                 <span class="fw-bold text-muted" style="width: 20px;">#{{ $index + 1 }}</span>
                                 <div class="service-icon" style="width: 40px; height: 40px; font-size: 1.25rem;">
-                                    {{ $sub->display_icon }}
+                                    {!! $sub->rendered_icon !!}
                                 </div>
                                 <div>
                                     <a href="{{ route('subscriptions.show', $sub) }}" class="fw-bold text-decoration-none text-reset">

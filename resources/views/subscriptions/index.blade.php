@@ -164,7 +164,7 @@
                                 <div class="d-flex align-items-start justify-content-between mb-3">
                                     <div class="d-flex align-items-center gap-3">
                                         <div class="service-icon">
-                                            {{ $sub->display_icon }}
+                                            {!! $sub->rendered_icon !!}
                                         </div>
                                         <div>
                                             <h5 class="fw-bold mb-0">
@@ -220,13 +220,13 @@
                                         @if($isCancelled)
                                             <span class="text-muted fw-bold">Cancelled (Archived)</span>
                                         @elseif($days < 0)
-                                            <span class="badge-pill-custom badge-urgent-critical">🔴 Overdue by {{ abs($days) }}d</span>
+                                            <span class="badge-pill-custom badge-urgent-critical"><i class="bi bi-circle-fill text-danger me-1"></i>Overdue by {{ abs($days) }}d</span>
                                         @elseif($days === 0)
-                                            <span class="badge-pill-custom badge-urgent-critical">🔴 Due Today!</span>
+                                            <span class="badge-pill-custom badge-urgent-critical"><i class="bi bi-circle-fill text-danger me-1"></i>Due Today!</span>
                                         @elseif($days <= 3)
-                                            <span class="badge-pill-custom badge-urgent-critical">🔴 Due in {{ $days }} days</span>
+                                            <span class="badge-pill-custom badge-urgent-critical"><i class="bi bi-circle-fill text-danger me-1"></i>Due in {{ $days }} days</span>
                                         @elseif($days <= 7)
-                                            <span class="badge-pill-custom badge-urgent-warning">🟡 Due in {{ $days }} days</span>
+                                            <span class="badge-pill-custom badge-urgent-warning"><i class="bi bi-circle-fill text-warning me-1"></i>Due in {{ $days }} days</span>
                                         @else
                                             <span class="badge-pill-custom badge-urgent-normal">Due in {{ $days }} days</span>
                                         @endif
@@ -321,7 +321,7 @@
                                     <td>
                                         <div class="d-flex align-items-center gap-3">
                                             <div class="service-icon" style="width: 38px; height: 38px; font-size: 1.2rem;">
-                                                {{ $sub->display_icon }}
+                                                {!! $sub->rendered_icon !!}
                                             </div>
                                             <div>
                                                 <a href="{{ route('subscriptions.show', $sub) }}" class="fw-bold text-decoration-none text-reset">
@@ -362,13 +362,13 @@
                                         @if($isCancelled)
                                             <span class="text-muted small">None (Cancelled)</span>
                                         @elseif($days < 0)
-                                            <span class="badge-pill-custom badge-urgent-critical">🔴 Overdue {{ abs($days) }}d</span>
+                                            <span class="badge-pill-custom badge-urgent-critical"><i class="bi bi-circle-fill text-danger me-1"></i>Overdue {{ abs($days) }}d</span>
                                         @elseif($days === 0)
-                                            <span class="badge-pill-custom badge-urgent-critical">🔴 Due Today</span>
+                                            <span class="badge-pill-custom badge-urgent-critical"><i class="bi bi-circle-fill text-danger me-1"></i>Due Today</span>
                                         @elseif($days <= 3)
-                                            <span class="badge-pill-custom badge-urgent-critical">🔴 Due in {{ $days }}d</span>
+                                            <span class="badge-pill-custom badge-urgent-critical"><i class="bi bi-circle-fill text-danger me-1"></i>Due in {{ $days }}d</span>
                                         @elseif($days <= 7)
-                                            <span class="badge-pill-custom badge-urgent-warning">🟡 In {{ $days }}d</span>
+                                            <span class="badge-pill-custom badge-urgent-warning"><i class="bi bi-circle-fill text-warning me-1"></i>In {{ $days }}d</span>
                                         @else
                                             <span class="small text-muted">In {{ $days }}d</span>
                                         @endif
@@ -419,7 +419,7 @@
     @else
         <!-- Empty State -->
         <div class="card-custom text-center py-5">
-            <div class="display-5 mb-3 text-muted">🔍</div>
+            <div class="display-5 mb-3 text-muted"><i class="bi bi-search"></i></div>
             <h4 class="fw-bold mb-1">No subscriptions found</h4>
             <p class="text-muted small mb-4" style="max-width: 400px; margin: 0 auto;">
                 No subscriptions matched your active search or filter criteria. Try resetting filters or add a new record.

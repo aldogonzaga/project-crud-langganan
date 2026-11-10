@@ -12,7 +12,7 @@
             <div class="d-flex align-items-center justify-content-between pb-3 mb-4 border-bottom" style="border-color: var(--bd) !important;">
                 <div class="d-flex align-items-center gap-3">
                     <div class="service-icon" style="font-size: 1.5rem;">
-                        {{ $subscription->display_icon }}
+                        {!! $subscription->rendered_icon !!}
                     </div>
                     <div>
                         <h4 class="fw-bold mb-0">{{ $subscription->name }}</h4>
@@ -51,25 +51,25 @@
                         @enderror
                     </div>
 
-                    <!-- Icon / Emoji Picker -->
+                    <!-- Icon / Bootstrap Icon Picker -->
                     <div class="col-12 col-md-4">
-                        <label for="icon" class="form-label fw-semibold small">Icon / Emoji</label>
+                        <label for="icon" class="form-label fw-semibold small">Bootstrap Icon (bi-*)</label>
                         <div class="input-group">
                             <span class="input-group-text bg-transparent border-end-0 rounded-start-4 ps-3" id="icon-preview" style="border-color: var(--bd); font-size: 1.2rem;">
-                                {{ $subscription->display_icon }}
+                                {!! $subscription->rendered_icon !!}
                             </span>
                             <input type="text" class="form-control form-control-custom rounded-end-4 border-start-0 ps-2 @error('icon') is-invalid @enderror" 
-                                   id="icon" name="icon" value="{{ old('icon', $subscription->icon) }}" maxlength="10">
+                                   id="icon" name="icon" value="{{ old('icon', $subscription->display_icon) }}" maxlength="50" placeholder="e.g. bi-film, bi-spotify">
                         </div>
                         <div class="d-flex gap-1 mt-1">
-                            <button type="button" class="btn btn-sm btn-light border p-0 px-1" onclick="setIcon('🎵')">🎵</button>
-                            <button type="button" class="btn btn-sm btn-light border p-0 px-1" onclick="setIcon('🎬')">🎬</button>
-                            <button type="button" class="btn btn-sm btn-light border p-0 px-1" onclick="setIcon('💻')">💻</button>
-                            <button type="button" class="btn btn-sm btn-light border p-0 px-1" onclick="setIcon('🏋️')">🏋️</button>
-                            <button type="button" class="btn btn-sm btn-light border p-0 px-1" onclick="setIcon('⚡')">⚡</button>
-                            <button type="button" class="btn btn-sm btn-light border p-0 px-1" onclick="setIcon('☁️')">☁️</button>
-                            <button type="button" class="btn btn-sm btn-light border p-0 px-1" onclick="setIcon('📚')">📚</button>
-                            <button type="button" class="btn btn-sm btn-light border p-0 px-1" onclick="setIcon('🥗')">🥗</button>
+                            <button type="button" class="btn btn-sm btn-light border p-0 px-2" onclick="setIcon('bi-music-note-beamed')" title="Music"><i class="bi bi-music-note-beamed"></i></button>
+                            <button type="button" class="btn btn-sm btn-light border p-0 px-2" onclick="setIcon('bi-film')" title="Entertainment"><i class="bi bi-film"></i></button>
+                            <button type="button" class="btn btn-sm btn-light border p-0 px-2" onclick="setIcon('bi-laptop')" title="Work"><i class="bi bi-laptop"></i></button>
+                            <button type="button" class="btn btn-sm btn-light border p-0 px-2" onclick="setIcon('bi-heart-pulse')" title="Health"><i class="bi bi-heart-pulse"></i></button>
+                            <button type="button" class="btn btn-sm btn-light border p-0 px-2" onclick="setIcon('bi-lightning-charge')" title="Utilities"><i class="bi bi-lightning-charge"></i></button>
+                            <button type="button" class="btn btn-sm btn-light border p-0 px-2" onclick="setIcon('bi-cloud')" title="Cloud"><i class="bi bi-cloud"></i></button>
+                            <button type="button" class="btn btn-sm btn-light border p-0 px-2" onclick="setIcon('bi-book')" title="Education"><i class="bi bi-book"></i></button>
+                            <button type="button" class="btn btn-sm btn-light border p-0 px-2" onclick="setIcon('bi-cup-hot')" title="Food"><i class="bi bi-cup-hot"></i></button>
                         </div>
                     </div>
 
@@ -205,13 +205,27 @@
 
 @section('scripts')
 <script>
-    function setIcon(emoji) {
-        document.getElementById('icon').value = emoji;
-        document.getElementById('icon-preview').textContent = emoji;
+    function setIcon(icon) {
+        document.getElementById('icon').value = icon;
+        updateIconPreview(icon);
+    }
+
+    function updateIconPreview(icon) {
+        const preview = document.getElementById('icon-preview');
+        if (!icon) {
+            preview.innerHTML = '<i class="bi bi-tag"></i>';
+            return;
+        }
+        if (icon.startsWith('bi-') || icon.startsWith('bi ')) {
+            const cls = icon.startsWith('bi ') ? icon : 'bi ' + icon;
+            preview.innerHTML = `<i class="${cls}"></i>`;
+        } else {
+            preview.textContent = icon;
+        }
     }
 
     document.getElementById('icon').addEventListener('input', function() {
-        document.getElementById('icon-preview').textContent = this.value || '✨';
+        updateIconPreview(this.value);
     });
 
     function updateCostPreview() {
@@ -230,11 +244,19 @@
             yearly = cost;
         }
 
-        document.getElementById('monthly-preview').textContent = currency + monthly.toFixed(2) + ' / mo';
-        document.getElementById('yearly-preview').textContent = currency + yearly.toFixed(2) + ' / yr';
+        const fmt = (val) => {
+            if (currency.trim() === 'Rp') {
+                return 'Rp ' + Math.round(val).toLocaleString('id-ID');
+            }
+            return currency + val.toFixed(2);
+        };
+
+        document.getElementById('monthly-preview').textContent = fmt(monthly) + ' / mo';
+        document.getElementById('yearly-preview').textContent = fmt(yearly) + ' / yr';
     }
 
     document.addEventListener('DOMContentLoaded', function() {
+        updateIconPreview(document.getElementById('icon').value);
         updateCostPreview();
     });
 </script>

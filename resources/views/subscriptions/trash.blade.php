@@ -38,7 +38,7 @@
                             <td>
                                 <div class="d-flex align-items-center gap-3">
                                     <div class="service-icon" style="opacity: 0.6;">
-                                        {{ $sub->display_icon }}
+                                        {!! $sub->rendered_icon !!}
                                     </div>
                                     <div>
                                         <div class="fw-bold text-decoration-line-through text-muted">{{ $sub->name }}</div>
@@ -85,7 +85,7 @@
         </div>
     @else
         <div class="text-center py-5">
-            <div class="display-6 mb-2 text-muted">🗑️</div>
+            <div class="display-6 mb-2 text-muted"><i class="bi bi-trash3"></i></div>
             <h6 class="fw-bold mb-1">Trash is Empty</h6>
             <p class="text-muted small mb-0">No deleted subscriptions currently in trash.</p>
         </div>

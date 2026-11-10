@@ -40,8 +40,8 @@
                 <div class="mb-4">
                     <label for="currency" class="form-label fw-semibold small">Preferred Currency Symbol <span class="text-danger">*</span></label>
                     <select class="form-select form-select-custom @error('currency') is-invalid @enderror" id="currency" name="currency" required>
+                        <option value="Rp" {{ old('currency', $user->currency ?? 'Rp') === 'Rp' ? 'selected' : '' }}>IDR (Rp) - Indonesian Rupiah</option>
                         <option value="$" {{ old('currency', $user->currency) === '$' ? 'selected' : '' }}>USD ($) - US Dollar</option>
-                        <option value="Rp" {{ old('currency', $user->currency) === 'Rp' ? 'selected' : '' }}>IDR (Rp) - Indonesian Rupiah</option>
                         <option value="€" {{ old('currency', $user->currency) === '€' ? 'selected' : '' }}>EUR (€) - Euro</option>
                         <option value="£" {{ old('currency', $user->currency) === '£' ? 'selected' : '' }}>GBP (£) - British Pound</option>
                         <option value="¥" {{ old('currency', $user->currency) === '¥' ? 'selected' : '' }}>JPY (¥) - Japanese Yen</option>

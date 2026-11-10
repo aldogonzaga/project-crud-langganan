@@ -61,7 +61,7 @@
                                 <div class="d-flex align-items-center justify-content-between mb-3">
                                     <div class="d-flex align-items-center gap-3">
                                         <div class="service-icon" style="background: #ffffff;">
-                                            {{ $trial->display_icon }}
+                                            {!! $trial->rendered_icon !!}
                                         </div>
                                         <div>
                                             <h5 class="fw-bold mb-0">{{ $trial->name }}</h5>
@@ -147,7 +147,7 @@
                                 <div class="d-flex align-items-center justify-content-between mb-3">
                                     <div class="d-flex align-items-center gap-3">
                                         <div class="service-icon">
-                                            {{ $trial->display_icon }}
+                                            {!! $trial->rendered_icon !!}
                                         </div>
                                         <div>
                                             <h5 class="fw-bold mb-0">{{ $trial->name }}</h5>

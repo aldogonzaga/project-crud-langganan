@@ -19,7 +19,7 @@
             <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 pb-3 mb-4 border-bottom" style="border-color: var(--bd) !important;">
                 <div class="d-flex align-items-center gap-3">
                     <div class="service-icon" style="width: 56px; height: 56px; font-size: 2rem;">
-                        {{ $subscription->display_icon }}
+                        {!! $subscription->rendered_icon !!}
                     </div>
                     <div>
                         <div class="d-flex align-items-center gap-2">
