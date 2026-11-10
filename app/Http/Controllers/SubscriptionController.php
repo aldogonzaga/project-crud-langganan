@@ -54,19 +54,24 @@ class SubscriptionController extends Controller
     /**
      * Show the form for creating a new subscription.
      */
-    public function create(): View
+    public function create(Request $request): View
     {
         $categories = ['Entertainment', 'Utilities', 'Health', 'Work', 'Education', 'Food', 'Shopping', 'Others'];
         $cycles = ['Monthly', 'Yearly', 'Weekly'];
         $statuses = ['Active', 'Free Trial', 'Cancelled'];
 
-        return view('subscriptions.create', compact('categories', 'cycles', 'statuses'));
+        $cloneFrom = null;
+        if ($request->has('clone_id')) {
+            $cloneFrom = Auth::user()->subscriptions()->find($request->input('clone_id'));
+        }
+
+        return view('subscriptions.create', compact('categories', 'cycles', 'statuses', 'cloneFrom'));
     }
 
     /**
      * Store a newly created subscription in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:150'],
@@ -81,7 +86,15 @@ class SubscriptionController extends Controller
 
         $subscription = Auth::user()->subscriptions()->create($validated);
 
-        return redirect()->route('subscriptions.index')
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => "Subscription \"{$subscription->name}\" added successfully!",
+                'subscription' => $subscription,
+            ]);
+        }
+
+        return redirect()->back()
             ->with('success', "Subscription \"{$subscription->name}\" added successfully!");
     }
 
@@ -203,6 +216,90 @@ class SubscriptionController extends Controller
 
         return redirect()->route('subscriptions.trash')
             ->with('success', "Subscription \"{$name}\" has been permanently deleted.");
+    }
+
+    /**
+     * Mark as paid and advance renewal schedule by 1 cycle.
+     */
+    public function renew(Subscription $subscription): RedirectResponse
+    {
+        $this->authorizeSubscription($subscription);
+
+        $currentDate = $subscription->next_billing_date ? Carbon::parse($subscription->next_billing_date) : Carbon::today();
+        $baseDate = $currentDate->isPast() ? Carbon::today() : $currentDate;
+
+        $nextDate = match ($subscription->billing_cycle) {
+            'Weekly' => $baseDate->copy()->addWeek(),
+            'Yearly' => $baseDate->copy()->addYear(),
+            default => $baseDate->copy()->addMonth(),
+        };
+
+        $updates = [
+            'next_billing_date' => $nextDate->toDateString(),
+        ];
+
+        // If it was a free trial, automatically activate it when marked as paid
+        if ($subscription->status === 'Free Trial') {
+            $updates['status'] = 'Active';
+        }
+
+        $subscription->update($updates);
+
+        return back()->with('success', "Renewal recorded for {$subscription->name}! Next payment advanced to {$nextDate->format('M d, Y')}.");
+    }
+
+    /**
+     * Export all subscriptions to a CSV file.
+     */
+    public function exportCsv()
+    {
+        $user = Auth::user();
+        $subscriptions = $user->subscriptions()->orderBy('next_billing_date', 'asc')->get();
+
+        $filename = 'subtrack_subscriptions_' . date('Y-m-d') . '.csv';
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+            'Pragma' => 'no-cache',
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+            'Expires' => '0',
+        ];
+
+        $callback = function () use ($subscriptions, $user) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, [
+                'ID',
+                'Service Name',
+                'Category',
+                'Cost',
+                'Currency',
+                'Billing Cycle',
+                'Monthly Cost Equivalent',
+                'Next Billing Date',
+                'Status',
+                'Notes',
+            ]);
+
+            foreach ($subscriptions as $sub) {
+                fputcsv($file, [
+                    $sub->id,
+                    $sub->name,
+                    $sub->category,
+                    $sub->cost,
+                    $user->currency,
+                    $sub->billing_cycle,
+                    $sub->monthly_cost,
+                    $sub->next_billing_date ? $sub->next_billing_date->format('Y-m-d') : '',
+                    $sub->status,
+                    $sub->notes,
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 
     /**

@@ -233,7 +233,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
             padding-bottom: 16px;
             border-bottom: 1px solid var(--bd);
         }
@@ -258,7 +258,7 @@
             border-radius: 20px;
             padding: 22px;
             box-shadow: var(--sh);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
         }
 
         .card-custom:hover {
@@ -277,6 +277,11 @@
             justify-content: space-between;
             position: relative;
             overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-2px);
         }
 
         .metric-icon-box {
@@ -397,6 +402,7 @@
             transition: all 0.2s ease;
             box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
             text-decoration: none;
+            cursor: pointer;
         }
 
         .btn-theme:hover {
@@ -411,20 +417,41 @@
             color: var(--tx);
             border: 1px solid var(--bd);
             border-radius: 999px;
-            padding: 9px 18px;
+            padding: 8px 18px;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             display: inline-flex;
             align-items: center;
             gap: 8px;
             transition: all 0.2s ease;
             text-decoration: none;
+            cursor: pointer;
         }
 
         .btn-theme-secondary:hover {
             background: var(--bd);
             color: var(--tx);
             transform: translateY(-1px);
+        }
+
+        .btn-theme-success {
+            background: var(--okb);
+            color: var(--ok);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 999px;
+            padding: 8px 16px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn-theme-success:hover {
+            background: var(--ok);
+            color: #ffffff;
         }
 
         .btn-theme-danger {
@@ -439,6 +466,7 @@
             align-items: center;
             gap: 6px;
             transition: all 0.2s ease;
+            cursor: pointer;
         }
 
         .btn-theme-danger:hover {
@@ -447,8 +475,8 @@
         }
 
         .btn-circle {
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             border: 1px solid var(--bd);
             background: var(--card);
@@ -564,6 +592,38 @@
 
         .table-custom tr:last-child td {
             border-bottom: none;
+        }
+
+        /* Modern Toast Styling */
+        .custom-toast {
+            background: var(--card);
+            border: 1px solid var(--bd);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+            color: var(--tx);
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 320px;
+            animation: slideInUp 0.3s ease forwards;
+        }
+
+        .custom-toast.success {
+            border-left: 5px solid var(--ok);
+        }
+
+        .custom-toast.danger {
+            border-left: 5px solid var(--da);
+        }
+
+        .custom-toast.info {
+            border-left: 5px solid var(--pri);
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Mobile Bottom Nav */
@@ -706,14 +766,14 @@
                             {{ Auth::user()->name }}
                         </div>
                         <div class="text-truncate" style="font-size: 0.75rem; color: var(--mu);">
-                            {{ Auth::user()->currency }} Currency
+                            {{ Auth::user()->currency }} &bull; Budget: {{ Auth::user()->formatCurrency(Auth::user()->monthly_budget ?? 200) }}
                         </div>
                     </div>
                     <i class="bi bi-chevron-right text-muted" style="font-size: 0.8rem;"></i>
                 </a>
 
                 <div class="d-flex gap-2">
-                    <button class="btn btn-theme-secondary w-100 justify-content-center" id="theme-toggle-btn" title="Toggle theme" onclick="toggleTheme()">
+                    <button class="btn btn-theme-secondary w-100 justify-content-center" id="theme-toggle-btn" title="Toggle theme (Press D)" onclick="toggleTheme()">
                         <i class="bi bi-moon-stars" id="theme-icon"></i>
                         <span id="theme-text" style="font-size: 0.82rem;">Dark Mode</span>
                     </button>
@@ -738,11 +798,20 @@
                 </div>
 
                 <div class="d-flex align-items-center gap-2">
-                    <!-- Quick Add Subscription Button -->
-                    <a href="{{ route('subscriptions.create') }}" class="btn-theme">
+                    <!-- Quick Global Search trigger -->
+                    @if(request()->routeIs('subscriptions.index'))
+                        <div class="d-none d-md-flex align-items-center text-muted small px-3 py-1.5 rounded-pill border" style="background: var(--card); border-color: var(--bd) !important;">
+                            <i class="bi bi-search me-2"></i>
+                            <span>Type <kbd class="px-1.5 py-0.5 rounded border small bg-body" style="font-size: 0.7rem;">/</kbd> to search</span>
+                        </div>
+                    @endif
+
+                    <!-- Quick Add Modal Trigger Button -->
+                    <button type="button" class="btn-theme" data-bs-toggle="modal" data-bs-target="#quickAddModal" title="Add Subscription (Press N)">
                         <i class="bi bi-plus-lg"></i>
                         <span>Add Subscription</span>
-                    </a>
+                        <kbd class="d-none d-lg-inline-block text-white-50 px-1.5 py-0.2 rounded border border-white-50 ms-1" style="font-size: 0.65rem; background: rgba(255,255,255,0.15);">N</kbd>
+                    </button>
 
                     <!-- Mobile Theme Toggle -->
                     <button class="btn-circle d-lg-none" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
@@ -759,44 +828,6 @@
                 </div>
             </header>
 
-            <!-- Flash Alerts / Feedback Messages -->
-            @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm rounded-4 mb-4" role="alert" style="background: var(--okb); color: var(--ok); border-left: 4px solid var(--ok) !important;">
-                    <i class="bi bi-check-circle-fill me-2"></i>
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-
-            @if(session('info'))
-                <div class="alert alert-info alert-dismissible fade show border-0 shadow-sm rounded-4 mb-4" role="alert" style="background: var(--sec); color: var(--pri); border-left: 4px solid var(--pri) !important;">
-                    <i class="bi bi-info-circle-fill me-2"></i>
-                    {{ session('info') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-
-            @if(session('warning'))
-                <div class="alert alert-warning alert-dismissible fade show border-0 shadow-sm rounded-4 mb-4" role="alert" style="background: var(--wab); color: var(--wa); border-left: 4px solid var(--wa) !important;">
-                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                    {{ session('warning') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-
-            @if(isset($errors) && $errors->any())
-                <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm rounded-4 mb-4" role="alert" style="background: var(--dab); color: var(--da); border-left: 4px solid var(--da) !important;">
-                    <i class="bi bi-exclamation-circle-fill me-2"></i>
-                    <strong>Please check the errors below:</strong>
-                    <ul class="mb-0 mt-1 ps-3">
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-
             <!-- Main Page Content Section -->
             @yield('content')
         </main>
@@ -812,6 +843,10 @@
             <i class="bi bi-arrow-repeat"></i>
             <span>Subs</span>
         </a>
+        <button type="button" class="bnav-link border-0 bg-transparent text-primary" data-bs-toggle="modal" data-bs-target="#quickAddModal" style="color: var(--pri) !important;">
+            <i class="bi bi-plus-circle-fill fs-3"></i>
+            <span>Add</span>
+        </button>
         <a href="{{ route('trials.index') }}" class="bnav-link {{ request()->routeIs('trials.*') ? 'active' : '' }}">
             <i class="bi bi-hourglass-split"></i>
             <span>Trials</span>
@@ -820,16 +855,153 @@
             <i class="bi bi-pie-chart"></i>
             <span>Charts</span>
         </a>
-        <a href="{{ route('profile.edit') }}" class="bnav-link {{ request()->routeIs('profile.*') ? 'active' : '' }}">
-            <i class="bi bi-person"></i>
-            <span>Profile</span>
-        </a>
     </nav>
+
+    <!-- Global Floating Toast Container -->
+    <div id="toast-container" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1090;"></div>
+
+    <!-- Quick Add Subscription Modal -->
+    <div class="modal fade" id="quickAddModal" tabindex="-1" aria-labelledby="quickAddModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content rounded-4 border-0 shadow-lg" style="background: var(--card); color: var(--tx);">
+                <div class="modal-header border-bottom px-4 pt-4 pb-3" style="border-color: var(--bd) !important;">
+                    <div>
+                        <h5 class="modal-title fw-bold" id="quickAddModalLabel">
+                            <i class="bi bi-plus-circle-fill me-2 text-primary" style="color: var(--pri) !important;"></i>
+                            Quick Add Subscription
+                        </h5>
+                        <p class="text-muted small mb-0">Record a recurring service or free trial without navigating away.</p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body px-4 py-3">
+                    <!-- Quick Autofill Presets -->
+                    <div class="p-2.5 rounded-3 mb-3" style="background: var(--sec); border: 1px solid var(--bd);">
+                        <div class="small text-muted fw-semibold mb-2">⚡ 1-Click Popular Presets:</div>
+                        <div class="d-flex flex-wrap gap-1.5">
+                            <button type="button" class="btn btn-sm btn-light border rounded-pill py-1 px-2.5 small" onclick="quickFillModal('Spotify Premium', 10.99, 'Monthly', 'Entertainment', 'Active', '🎵')">🎵 Spotify</button>
+                            <button type="button" class="btn btn-sm btn-light border rounded-pill py-1 px-2.5 small" onclick="quickFillModal('Netflix Standard', 15.49, 'Monthly', 'Entertainment', 'Active', '🎬')">🎬 Netflix</button>
+                            <button type="button" class="btn btn-sm btn-light border rounded-pill py-1 px-2.5 small" onclick="quickFillModal('ChatGPT Plus', 20.00, 'Monthly', 'Work', 'Active', '🤖')">🤖 ChatGPT</button>
+                            <button type="button" class="btn btn-sm btn-light border rounded-pill py-1 px-2.5 small" onclick="quickFillModal('YouTube Premium', 13.99, 'Monthly', 'Entertainment', 'Active', '▶️')">▶️ YouTube</button>
+                            <button type="button" class="btn btn-sm btn-light border rounded-pill py-1 px-2.5 small" onclick="quickFillModal('GitHub Copilot', 10.00, 'Monthly', 'Work', 'Active', '💻')">💻 Copilot</button>
+                            <button type="button" class="btn btn-sm btn-light border rounded-pill py-1 px-2.5 small" onclick="quickFillModal('Gym Membership', 45.00, 'Monthly', 'Health', 'Active', '🏋️')">🏋️ Gym</button>
+                            <button type="button" class="btn btn-sm btn-light border rounded-pill py-1 px-2.5 small" onclick="quickFillModal('iCloud+ 2TB', 9.99, 'Monthly', 'Utilities', 'Active', '☁️')">☁️ iCloud</button>
+                            <button type="button" class="btn btn-sm btn-light border rounded-pill py-1 px-2.5 small" onclick="quickFillModal('Figma Pro Trial', 15.00, 'Monthly', 'Work', 'Free Trial', '📐')">⏳ Figma Trial</button>
+                        </div>
+                    </div>
+
+                    <form action="{{ route('subscriptions.store') }}" method="POST" id="quickAddForm">
+                        @csrf
+                        <div class="row g-3">
+                            <div class="col-12 col-md-8">
+                                <label for="m_name" class="form-label small fw-semibold">Service Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control form-control-custom" id="m_name" name="name" required placeholder="e.g. Spotify, Gym, AWS">
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <label for="m_icon" class="form-label small fw-semibold">Icon / Emoji</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-transparent border-end-0 rounded-start-4 ps-3" id="m_icon_preview" style="border-color: var(--bd); font-size: 1.2rem;">
+                                        🎬
+                                    </span>
+                                    <input type="text" class="form-control form-control-custom rounded-end-4 border-start-0 ps-2" id="m_icon" name="icon" value="🎬" maxlength="10">
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label for="m_cost" class="form-label small fw-semibold">Cost <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-transparent border-end-0 rounded-start-4 ps-3 fw-bold" style="border-color: var(--bd); color: var(--pri);">
+                                        {{ Auth::user()->currency }}
+                                    </span>
+                                    <input type="number" step="0.01" min="0" class="form-control form-control-custom rounded-end-4 border-start-0 ps-2" 
+                                           id="m_cost" name="cost" value="9.99" required oninput="calcModalCost()">
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label for="m_cycle" class="form-label small fw-semibold">Billing Cycle <span class="text-danger">*</span></label>
+                                <select class="form-select form-select-custom" id="m_cycle" name="billing_cycle" required onchange="calcModalCost()">
+                                    <option value="Monthly" selected>Monthly</option>
+                                    <option value="Yearly">Yearly</option>
+                                    <option value="Weekly">Weekly</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label for="m_category" class="form-label small fw-semibold">Category <span class="text-danger">*</span></label>
+                                <select class="form-select form-select-custom" id="m_category" name="category" required>
+                                    <option value="Entertainment" selected>Entertainment</option>
+                                    <option value="Utilities">Utilities</option>
+                                    <option value="Health">Health</option>
+                                    <option value="Work">Work</option>
+                                    <option value="Education">Education</option>
+                                    <option value="Food">Food</option>
+                                    <option value="Shopping">Shopping</option>
+                                    <option value="Others">Others</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label for="m_status" class="form-label small fw-semibold">Status <span class="text-danger">*</span></label>
+                                <select class="form-select form-select-custom" id="m_status" name="status" required>
+                                    <option value="Active" selected>Active</option>
+                                    <option value="Free Trial">Free Trial</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="m_date" class="form-label small fw-semibold">Next Billing / Renewal Date <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control form-control-custom" id="m_date" name="next_billing_date" value="{{ date('Y-m-d', strtotime('+30 days')) }}" required>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="m_notes" class="form-label small fw-semibold">Notes (Optional)</label>
+                                <textarea class="form-control form-control-custom" id="m_notes" name="notes" rows="2" placeholder="Plan details or cancellation reminders..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Live Cost Preview -->
+                        <div class="rounded-3 p-2.5 my-3 d-flex justify-content-between align-items-center" style="background: var(--sec); border: 1px solid var(--bd);">
+                            <span class="small text-muted">Effective Cost: <strong id="m_monthly_preview" style="color: var(--pri);">{{ Auth::user()->currency }}9.99 / mo</strong></span>
+                            <span class="small text-muted">Annual: <strong id="m_yearly_preview">{{ Auth::user()->currency }}119.88 / yr</strong></span>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button type="button" class="btn btn-theme-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-theme">
+                                <i class="bi bi-check-lg"></i> Add Subscription
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reusable Confirmation Dialog Modal -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content rounded-4 border-0 shadow-lg text-center p-4" style="background: var(--card); color: var(--tx);">
+                <div class="rounded-circle d-grid place-items-center mx-auto mb-3" id="confirmIconBox" style="width: 52px; height: 52px; background: var(--dab); color: var(--da); font-size: 1.5rem;">
+                    <i class="bi bi-exclamation-triangle-fill" id="confirmIcon"></i>
+                </div>
+                <h5 class="fw-bold mb-1" id="confirmTitle">Confirm Action</h5>
+                <p class="text-muted small mb-4" id="confirmMessage">Are you sure you want to perform this action?</p>
+                <div class="d-flex justify-content-center gap-2">
+                    <button type="button" class="btn btn-theme-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-theme-danger" id="confirmBtnAction">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Theme Switcher Script -->
+    <!-- Theme & Global App Scripts -->
     <script>
         function applyTheme(theme) {
             document.documentElement.setAttribute('data-bs-theme', theme);
@@ -854,11 +1026,132 @@
             const current = document.documentElement.getAttribute('data-bs-theme') || 'light';
             const next = current === 'dark' ? 'light' : 'dark';
             applyTheme(next);
+            showToast('Theme Updated', `Switched to ${next} mode.`, 'info');
         }
 
         // Initialize Theme
         const savedTheme = localStorage.getItem('subtrack-theme') || 'light';
         applyTheme(savedTheme);
+
+        // Toast System
+        function showToast(title, message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+
+            const icon = type === 'success' ? 'bi-check-circle-fill text-success' : (type === 'danger' ? 'bi-exclamation-circle-fill text-danger' : 'bi-info-circle-fill text-primary');
+            const toastEl = document.createElement('div');
+            toastEl.className = `custom-toast ${type} mb-2`;
+            toastEl.innerHTML = `
+                <i class="bi ${icon} fs-5"></i>
+                <div class="flex-grow-1">
+                    <strong class="d-block small" style="color: var(--tx);">${title}</strong>
+                    <span class="small text-muted">${message}</span>
+                </div>
+                <button type="button" class="btn-close small ms-2" onclick="this.parentElement.remove()"></button>
+            `;
+            container.appendChild(toastEl);
+
+            setTimeout(() => {
+                toastEl.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                toastEl.style.opacity = '0';
+                toastEl.style.transform = 'translateY(10px)';
+                setTimeout(() => toastEl.remove(), 400);
+            }, 3500);
+        }
+
+        // Show flash messages automatically
+        @if(session('success'))
+            document.addEventListener('DOMContentLoaded', () => showToast('Success', "{{ session('success') }}", 'success'));
+        @endif
+        @if(session('info'))
+            document.addEventListener('DOMContentLoaded', () => showToast('Notice', "{{ session('info') }}", 'info'));
+        @endif
+        @if(session('warning'))
+            document.addEventListener('DOMContentLoaded', () => showToast('Warning', "{{ session('warning') }}", 'danger'));
+        @endif
+
+        // Modal Calculation and Autofill
+        function quickFillModal(name, cost, cycle, cat, status, icon) {
+            document.getElementById('m_name').value = name;
+            document.getElementById('m_cost').value = cost;
+            document.getElementById('m_cycle').value = cycle;
+            document.getElementById('m_category').value = cat;
+            document.getElementById('m_status').value = status;
+            document.getElementById('m_icon').value = icon;
+            document.getElementById('m_icon_preview').textContent = icon;
+            calcModalCost();
+        }
+
+        document.getElementById('m_icon')?.addEventListener('input', function() {
+            document.getElementById('m_icon_preview').textContent = this.value || '✨';
+        });
+
+        function calcModalCost() {
+            const cost = parseFloat(document.getElementById('m_cost')?.value) || 0;
+            const cycle = document.getElementById('m_cycle')?.value || 'Monthly';
+            const curr = "{{ Auth::user()->currency }}";
+
+            let m = cost;
+            let y = cost * 12;
+
+            if (cycle === 'Weekly') {
+                m = (cost * 52) / 12;
+                y = cost * 52;
+            } else if (cycle === 'Yearly') {
+                m = cost / 12;
+                y = cost;
+            }
+
+            const mEl = document.getElementById('m_monthly_preview');
+            const yEl = document.getElementById('m_yearly_preview');
+            if (mEl) mEl.textContent = curr + m.toFixed(2) + ' / mo';
+            if (yEl) yEl.textContent = curr + y.toFixed(2) + ' / yr';
+        }
+
+        // Custom Confirm Dialog UX
+        let pendingFormSubmission = null;
+        function requestConfirm(event, formElement, title, message, btnClass = 'btn-theme-danger', btnText = 'Confirm') {
+            event.preventDefault();
+            pendingFormSubmission = formElement;
+
+            document.getElementById('confirmTitle').textContent = title;
+            document.getElementById('confirmMessage').textContent = message;
+            const btn = document.getElementById('confirmBtnAction');
+            btn.className = `btn ${btnClass}`;
+            btn.textContent = btnText;
+
+            const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
+            modal.show();
+        }
+
+        document.getElementById('confirmBtnAction')?.addEventListener('click', function() {
+            if (pendingFormSubmission) {
+                pendingFormSubmission.submit();
+            }
+        });
+
+        // Global Keyboard Shortcuts (N: New sub, /: Search, D: Dark mode)
+        document.addEventListener('keydown', function(e) {
+            if (['input', 'textarea', 'select'].includes(document.activeElement.tagName.toLowerCase())) {
+                return; // Don't trigger shortcuts when typing in inputs
+            }
+
+            if (e.key === 'n' || e.key === 'N') {
+                e.preventDefault();
+                const m = new bootstrap.Modal(document.getElementById('quickAddModal'));
+                m.show();
+            } else if (e.key === 'd' || e.key === 'D') {
+                e.preventDefault();
+                toggleTheme();
+            } else if (e.key === '/') {
+                e.preventDefault();
+                const s = document.querySelector('input[name="search"]') || document.getElementById('liveSearch');
+                if (s) {
+                    s.focus();
+                    s.select();
+                }
+            }
+        });
     </script>
 
     @yield('scripts')

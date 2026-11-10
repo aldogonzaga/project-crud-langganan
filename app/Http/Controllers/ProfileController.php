@@ -31,11 +31,26 @@ class ProfileController extends Controller
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'currency' => ['required', 'string', 'max:10'],
+            'monthly_budget' => ['nullable', 'numeric', 'min:0'],
         ]);
 
         $user->update($validated);
 
         return back()->with('success', 'Profile and preferences updated successfully!');
+    }
+
+    /**
+     * Fast update monthly budget limit.
+     */
+    public function updateBudget(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'monthly_budget' => ['required', 'numeric', 'min:0'],
+        ]);
+
+        Auth::user()->update($validated);
+
+        return back()->with('success', 'Monthly budget limit updated!');
     }
 
     /**

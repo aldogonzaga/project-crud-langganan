@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'currency',
+        'monthly_budget',
         'password',
     ];
 
@@ -44,6 +45,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'monthly_budget' => 'decimal:2',
             'password' => 'hashed',
         ];
     }

@@ -75,6 +75,11 @@ class DashboardController extends Controller
             'Weekly' => $activeSubscriptions->where('billing_cycle', 'Weekly')->count(),
         ];
 
+        // Budget limit and tracking (KeikiSpace gentle budget UX)
+        $monthlyBudget = (float) ($user->monthly_budget ?? 200.00);
+        $budgetPercent = $monthlyBudget > 0 ? min(150, round(($totalMonthlySpend / $monthlyBudget) * 100)) : 0;
+        $budgetRemaining = $monthlyBudget - $totalMonthlySpend;
+
         // Recent 5 subscriptions
         $recentSubscriptions = $subscriptions->sortByDesc('created_at')->take(5);
 
@@ -86,6 +91,9 @@ class DashboardController extends Controller
             'cancelledSubscriptions',
             'totalMonthlySpend',
             'totalYearlySpend',
+            'monthlyBudget',
+            'budgetPercent',
+            'budgetRemaining',
             'upcomingPayments',
             'criticalPaymentsCount',
             'trialsEndingSoon',

@@ -42,8 +42,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/subscriptions/{id}/force', [SubscriptionController::class, 'forceDelete'])->name('subscriptions.forceDelete');
 
     // Subscriptions CRUD
+    Route::get('/subscriptions/export/csv', [SubscriptionController::class, 'exportCsv'])->name('subscriptions.export');
     Route::resource('subscriptions', SubscriptionController::class);
     Route::patch('/subscriptions/{subscription}/status', [SubscriptionController::class, 'quickStatus'])->name('subscriptions.quickStatus');
+    Route::post('/subscriptions/{subscription}/renew', [SubscriptionController::class, 'renew'])->name('subscriptions.renew');
 
     // Free Trials Dedicated Management
     Route::get('/trials', [TrialController::class, 'index'])->name('trials.index');
@@ -56,5 +58,6 @@ Route::middleware('auth')->group(function () {
     // Profile & Preferences
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/budget', [ProfileController::class, 'updateBudget'])->name('profile.budget');
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
 });
