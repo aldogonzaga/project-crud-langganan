@@ -213,7 +213,6 @@
     @endif
 @else
     <div class="card-custom text-center py-5">
-        <div class="display-5 mb-3 text-muted">⏳</div>
         <h4 class="fw-bold mb-1">No Active Free Trials Tracked</h4>
         <p class="text-muted small mb-4" style="max-width: 440px; margin: 0 auto;">
             Track free software trials or introductory memberships with their auto-renewal dates to make sure you cancel before money leaves your bank.
