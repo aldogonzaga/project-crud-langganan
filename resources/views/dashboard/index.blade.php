@@ -295,7 +295,6 @@
                     </div>
                 @else
                     <div class="text-center py-5">
-                        <div class="display-6 mb-2 text-muted">✨</div>
                         <h6 class="fw-bold mb-1">No Active Free Trials</h6>
                         <p class="text-muted small mb-3">You don't have any free trials pending auto-renewal.</p>
                         <a href="{{ route('subscriptions.create') }}" class="btn btn-sm btn-theme-secondary">

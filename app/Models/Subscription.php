@@ -140,7 +140,7 @@ class Subscription extends Model
             '🥗' => 'bi-cup-hot',
             '🛍️', '🛍' => 'bi-bag',
             '⏳' => 'bi-hourglass-split',
-            '✨' => 'bi-stars',
+            '✨' => 'bi-archive-fill',
             default => $icon,
         };
     }
