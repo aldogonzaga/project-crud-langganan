@@ -799,12 +799,6 @@
 
                 <div class="d-flex align-items-center gap-2">
                     <!-- Quick Global Search trigger -->
-                    @if(request()->routeIs('subscriptions.index'))
-                        <div class="d-none d-md-flex align-items-center text-muted small px-3 py-1.5 rounded-pill border" style="background: var(--card); border-color: var(--bd) !important;">
-                            <i class="bi bi-search me-2"></i>
-                            <span>Type <kbd class="px-1.5 py-0.5 rounded border small bg-body" style="font-size: 0.7rem;">/</kbd> to search</span>
-                        </div>
-                    @endif
 
                     <!-- Quick Add Modal Trigger Button -->
                     <button type="button" class="btn-theme" data-bs-toggle="modal" data-bs-target="#quickAddModal" title="Add Subscription (Press N)">
@@ -876,21 +870,6 @@
                 </div>
 
                 <div class="modal-body px-4 py-3">
-                    <!-- Quick Autofill Presets -->
-                    <div class="p-2.5 rounded-3 mb-3" style="background: var(--sec); border: 1px solid var(--bd);">
-                        <div class="small text-muted fw-semibold mb-2">⚡ 1-Click Popular Presets:</div>
-                        <div class="d-flex flex-wrap gap-1.5">
-                            <button type="button" class="btn btn-sm btn-light border rounded-pill py-1 px-2.5 small" onclick="quickFillModal('Spotify Premium', 10.99, 'Monthly', 'Entertainment', 'Active', '🎵')">🎵 Spotify</button>
-                            <button type="button" class="btn btn-sm btn-light border rounded-pill py-1 px-2.5 small" onclick="quickFillModal('Netflix Standard', 15.49, 'Monthly', 'Entertainment', 'Active', '🎬')">🎬 Netflix</button>
-                            <button type="button" class="btn btn-sm btn-light border rounded-pill py-1 px-2.5 small" onclick="quickFillModal('ChatGPT Plus', 20.00, 'Monthly', 'Work', 'Active', '🤖')">🤖 ChatGPT</button>
-                            <button type="button" class="btn btn-sm btn-light border rounded-pill py-1 px-2.5 small" onclick="quickFillModal('YouTube Premium', 13.99, 'Monthly', 'Entertainment', 'Active', '▶️')">▶️ YouTube</button>
-                            <button type="button" class="btn btn-sm btn-light border rounded-pill py-1 px-2.5 small" onclick="quickFillModal('GitHub Copilot', 10.00, 'Monthly', 'Work', 'Active', '💻')">💻 Copilot</button>
-                            <button type="button" class="btn btn-sm btn-light border rounded-pill py-1 px-2.5 small" onclick="quickFillModal('Gym Membership', 45.00, 'Monthly', 'Health', 'Active', '🏋️')">🏋️ Gym</button>
-                            <button type="button" class="btn btn-sm btn-light border rounded-pill py-1 px-2.5 small" onclick="quickFillModal('iCloud+ 2TB', 9.99, 'Monthly', 'Utilities', 'Active', '☁️')">☁️ iCloud</button>
-                            <button type="button" class="btn btn-sm btn-light border rounded-pill py-1 px-2.5 small" onclick="quickFillModal('Figma Pro Trial', 15.00, 'Monthly', 'Work', 'Free Trial', '📐')">⏳ Figma Trial</button>
-                        </div>
-                    </div>
-
                     <form action="{{ route('subscriptions.store') }}" method="POST" id="quickAddForm">
                         @csrf
                         <div class="row g-3">
@@ -900,12 +879,67 @@
                             </div>
 
                             <div class="col-12 col-md-4">
-                                <label for="m_icon" class="form-label small fw-semibold">Icon / Emoji</label>
+                                <label for="m_icon" class="form-label small fw-semibold">Icon</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-transparent border-end-0 rounded-start-4 ps-3" id="m_icon_preview" style="border-color: var(--bd); font-size: 1.2rem;">
-                                        🎬
+                                        <i class="bi bi-film"></i>
                                     </span>
-                                    <input type="text" class="form-control form-control-custom rounded-end-4 border-start-0 ps-2" id="m_icon" name="icon" value="🎬" maxlength="10">
+                                    <select class="form-select form-select-custom rounded-end-4 border-start-0 ps-2" id="m_icon" name="icon">
+                                        <optgroup label="Entertainment">
+                                            <option value="bi-film" selected>🎬 Film</option>
+                                            <option value="bi-spotify">🎵 Spotify</option>
+                                            <option value="bi-youtube">▶ YouTube</option>
+                                            <option value="bi-music-note-beamed">🎶 Music</option>
+                                            <option value="bi-controller">🎮 Gaming</option>
+                                            <option value="bi-tv">📺 TV</option>
+                                            <option value="bi-headphones">🎧 Headphones</option>
+                                            <option value="bi-camera-reels">🎥 Camera</option>
+                                        </optgroup>
+                                        <optgroup label="Work & Productivity">
+                                            <option value="bi-github">🐙 GitHub</option>
+                                            <option value="bi-chat-dots-fill">💬 Chat</option>
+                                            <option value="bi-laptop">💻 Laptop</option>
+                                            <option value="bi-code-slash">⌨ Code</option>
+                                            <option value="bi-briefcase-fill">💼 Briefcase</option>
+                                            <option value="bi-kanban">📋 Board</option>
+                                            <option value="bi-pen-fill">✒ Pen</option>
+                                            <option value="bi-robot">🤖 AI / Bot</option>
+                                        </optgroup>
+                                        <optgroup label="Utilities & Cloud">
+                                            <option value="bi-cloud-fill">☁ Cloud</option>
+                                            <option value="bi-hdd-network-fill">🌐 Server</option>
+                                            <option value="bi-wifi">📡 WiFi</option>
+                                            <option value="bi-shield-lock-fill">🔒 Security</option>
+                                            <option value="bi-database-fill">🗄 Database</option>
+                                            <option value="bi-phone">📱 Phone</option>
+                                        </optgroup>
+                                        <optgroup label="Health & Fitness">
+                                            <option value="bi-heart-pulse-fill">❤ Health</option>
+                                            <option value="bi-trophy-fill">🏆 Fitness</option>
+                                            <option value="bi-bicycle">🚴 Cycling</option>
+                                            <option value="bi-cup-hot-fill">☕ Coffee</option>
+                                        </optgroup>
+                                        <optgroup label="Education">
+                                            <option value="bi-book-fill">📖 Book</option>
+                                            <option value="bi-mortarboard-fill">🎓 Education</option>
+                                            <option value="bi-journal-text">📝 Journal</option>
+                                        </optgroup>
+                                        <optgroup label="Food & Shopping">
+                                            <option value="bi-cart-fill">🛒 Shopping</option>
+                                            <option value="bi-bag-fill">👜 Bag</option>
+                                            <option value="bi-egg-fried">🍳 Food</option>
+                                        </optgroup>
+                                        <optgroup label="Other">
+                                            <option value="bi-star-fill">⭐ Star</option>
+                                            <option value="bi-lightning-charge-fill">⚡ Lightning</option>
+                                            <option value="bi-hourglass-split">⏳ Hourglass</option>
+                                            <option value="bi-gift-fill">🎁 Gift</option>
+                                            <option value="bi-house-fill">🏠 Home</option>
+                                            <option value="bi-car-front-fill">🚗 Car</option>
+                                            <option value="bi-cash-stack">💵 Cash</option>
+                                            <option value="bi-gem">💎 Premium</option>
+                                        </optgroup>
+                                    </select>
                                 </div>
                             </div>
 
@@ -1078,12 +1112,13 @@
             document.getElementById('m_category').value = cat;
             document.getElementById('m_status').value = status;
             document.getElementById('m_icon').value = icon;
-            document.getElementById('m_icon_preview').textContent = icon;
+            document.getElementById('m_icon_preview').innerHTML = '<i class="bi ' + icon + '"></i>';
             calcModalCost();
         }
 
-        document.getElementById('m_icon')?.addEventListener('input', function() {
-            document.getElementById('m_icon_preview').textContent = this.value || '✨';
+        document.getElementById('m_icon')?.addEventListener('change', function() {
+            const val = this.value || 'bi-star-fill';
+            document.getElementById('m_icon_preview').innerHTML = '<i class="bi ' + val + '"></i>';
         });
 
         function calcModalCost() {

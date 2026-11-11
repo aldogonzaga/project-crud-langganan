@@ -36,7 +36,7 @@
             @endif
         </div>
 
-        <!-- View Switcher (Cards vs Table) & Add Button -->
+        <!-- View Switcher (Cards vs Table) -->
         <div class="d-flex align-items-center gap-2">
             <div class="btn-group p-1 rounded-pill" style="background: var(--card); border: 1px solid var(--bd);">
                 <a href="{{ route('subscriptions.index', array_merge(request()->all(), ['view' => 'cards'])) }}" 
@@ -50,11 +50,6 @@
                     <i class="bi bi-table"></i>
                 </a>
             </div>
-
-            <a href="{{ route('subscriptions.create') }}" class="btn-theme">
-                <i class="bi bi-plus-lg"></i>
-                <span>Add New</span>
-            </a>
         </div>
     </div>
 
