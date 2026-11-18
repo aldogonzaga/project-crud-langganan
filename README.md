@@ -1,4 +1,4 @@
-# 💳 SubTrack &bull; Tracker Langganan &amp; Free Trial
+# 🌸 keikispace; Tracker Langganan &amp; Free Trial
 
 Aplikasi web **CRUD Tracker Langganan &amp; Free Trial** modern, responsif, full‑stack yang dibangun dengan **Laravel 12** dan **Bootstrap 5.3**.
 
