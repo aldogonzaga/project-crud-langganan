@@ -52,6 +52,23 @@
                     @enderror
                 </div>
 
+                <div class="mb-3">
+                    <label for="locale" class="form-label fw-semibold small">Language / Bahasa <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-transparent border-end-0 rounded-start-4 ps-3" style="border-color: var(--bd);">
+                            <i class="bi bi-translate text-muted"></i>
+                        </span>
+                        <select class="form-select form-select-custom rounded-end-4 border-start-0 ps-2 @error('locale') is-invalid @enderror" id="locale" name="locale" required>
+                            <option value="en" {{ old('locale', $user->locale ?? 'en') === 'en' ? 'selected' : '' }}>English (US)</option>
+                            <option value="id" {{ old('locale', $user->locale ?? 'en') === 'id' ? 'selected' : '' }}>Bahasa Indonesia (ID)</option>
+                        </select>
+                    </div>
+                    <div class="form-text small text-muted">Select your preferred interface language for navigation and dashboard metrics.</div>
+                    @error('locale')
+                        <div class="text-danger small mt-1">{{ $message }}</div>
+                    @enderror
+                </div>
+
                 <div class="mb-4">
                     <label for="monthly_budget" class="form-label fw-semibold small">Monthly Budget Limit</label>
                     <div class="input-group">

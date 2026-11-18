@@ -31,10 +31,16 @@ class ProfileController extends Controller
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'currency' => ['required', 'string', 'max:10'],
+            'locale' => ['nullable', 'string', 'in:en,id'],
             'monthly_budget' => ['nullable', 'numeric', 'min:0'],
         ]);
 
         $user->update($validated);
+
+        if (!empty($validated['locale'])) {
+            session(['locale' => $validated['locale']]);
+            app()->setLocale($validated['locale']);
+        }
 
         return back()->with('success', 'Profile and preferences updated successfully!');
     }

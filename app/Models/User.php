@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'currency',
+        'locale',
         'monthly_budget',
         'password',
     ];

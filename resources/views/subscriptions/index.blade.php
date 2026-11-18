@@ -11,27 +11,27 @@
         <div class="d-flex align-items-center gap-2 flex-wrap">
             <a href="{{ route('subscriptions.index', array_merge(request()->except('page', 'status'), ['status' => 'All'])) }}" 
                class="filter-chip {{ ($filters['status'] ?? 'All') === 'All' ? 'active' : '' }}">
-                <span>All</span>
+                <span>{{ __('All') }}</span>
                 <span class="badge rounded-pill bg-light text-dark small px-1.5 py-0.5" style="font-size: 0.7rem;">{{ $totalCount }}</span>
             </a>
             <a href="{{ route('subscriptions.index', array_merge(request()->except('page', 'status'), ['status' => 'Active'])) }}" 
                class="filter-chip {{ ($filters['status'] ?? '') === 'Active' ? 'active' : '' }}">
-                <span>Active</span>
+                <span>{{ __('Active') }}</span>
                 <span class="badge rounded-pill bg-success-subtle text-success small px-1.5 py-0.5" style="font-size: 0.7rem;">{{ $activeCount }}</span>
             </a>
             <a href="{{ route('subscriptions.index', array_merge(request()->except('page', 'status'), ['status' => 'Free Trial'])) }}" 
                class="filter-chip {{ ($filters['status'] ?? '') === 'Free Trial' ? 'active' : '' }}">
-                <span>Free Trial</span>
+                <span>{{ __('Free Trial') }}</span>
                 <span class="badge rounded-pill bg-warning-subtle text-warning small px-1.5 py-0.5" style="font-size: 0.7rem;">{{ $trialCount }}</span>
             </a>
             <a href="{{ route('subscriptions.index', array_merge(request()->except('page', 'status'), ['status' => 'Cancelled'])) }}" 
                class="filter-chip {{ ($filters['status'] ?? '') === 'Cancelled' ? 'active' : '' }}">
-                <span>Cancelled</span>
+                <span>{{ __('Cancelled') }}</span>
                 <span class="badge rounded-pill bg-secondary-subtle text-secondary small px-1.5 py-0.5" style="font-size: 0.7rem;">{{ $cancelledCount }}</span>
             </a>
             @if($trashCount > 0)
                 <a href="{{ route('subscriptions.trash') }}" class="filter-chip text-muted">
-                    <i class="bi bi-trash3"></i> Trash ({{ $trashCount }})
+                    <i class="bi bi-trash3"></i> {{ __('Trash') }} ({{ $trashCount }})
                 </a>
             @endif
         </div>

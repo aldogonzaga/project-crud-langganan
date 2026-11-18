@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
-@section('page_title', 'Dashboard')
-@section('page_subtitle', 'Welcome to your little money space ♡')
+@section('title', __('Dashboard'))
+@section('page_title', __('Dashboard'))
+@section('page_subtitle', __('Welcome to your little money space ♡'))
 
 @section('content')
     <!-- Top Metrics Overview Grid (KeikiSpace 5-Card Layout) -->
@@ -11,7 +11,7 @@
         <div class="col">
             <div class="metric-card h-100">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span class="metric-label">Monthly spending</span>
+                    <span class="metric-label">{{ __('Monthly spending') }}</span>
                     <span style="font-size: 1.15rem;">🌸</span>
                 </div>
                 <div class="metric-value" style="color: var(--tx);">
@@ -27,7 +27,7 @@
         <div class="col">
             <div class="metric-card h-100">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span class="metric-label">Remaining budget</span>
+                    <span class="metric-label">{{ __('Remaining budget') }}</span>
                     <span style="font-size: 1.15rem;">🌷</span>
                 </div>
                 <div class="metric-value {{ $budgetRemaining < 0 ? 'text-danger' : '' }}" style="color: {{ $budgetRemaining < 0 ? 'var(--da)' : 'var(--tx)' }};">
@@ -47,7 +47,7 @@
         <div class="col">
             <div class="metric-card h-100">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span class="metric-label">Active subscriptions</span>
+                    <span class="metric-label">{{ __('Active subscriptions') }}</span>
                     <span style="font-size: 1.15rem;">🗓️</span>
                 </div>
                 <div class="metric-value" style="color: var(--tx);">
@@ -55,7 +55,7 @@
                 </div>
                 <div class="small text-muted mt-1">
                     <a href="{{ route('subscriptions.index', ['status' => 'Active']) }}" class="text-decoration-none text-muted">
-                        View all <i class="bi bi-arrow-right"></i>
+                        {{ __('View all') }} <i class="bi bi-arrow-right"></i>
                     </a>
                 </div>
             </div>
@@ -65,7 +65,7 @@
         <div class="col">
             <div class="metric-card h-100 {{ $criticalPaymentsCount > 0 ? 'card-critical' : '' }}">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span class="metric-label">Upcoming bills</span>
+                    <span class="metric-label">{{ __('Upcoming bills') }}</span>
                     <span style="font-size: 1.15rem;">🗓️</span>
                 </div>
                 <div class="metric-value {{ $criticalPaymentsCount > 0 ? 'text-danger' : '' }}" style="{{ $criticalPaymentsCount > 0 ? 'color: var(--da) !important;' : 'color: var(--tx);' }}">
@@ -75,7 +75,7 @@
                     @if($criticalPaymentsCount > 0)
                         <span class="text-danger fw-bold">{{ $criticalPaymentsCount }} due in &le; 3 days!</span>
                     @else
-                        <span>Next 7 days</span>
+                        <span>{{ __('Next 7 days') }}</span>
                     @endif
                 </div>
             </div>
@@ -85,7 +85,7 @@
         <div class="col">
             <div class="metric-card h-100 {{ $trialsEndingSoon->where('days_until_due', '<=', 3)->count() > 0 ? 'card-critical' : '' }}">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span class="metric-label">Ongoing free trials</span>
+                    <span class="metric-label">{{ __('Ongoing free trials') }}</span>
                     <span style="font-size: 1.15rem;">⌛</span>
                 </div>
                 <div class="metric-value" style="color: var(--tx);">
@@ -93,7 +93,7 @@
                 </div>
                 <div class="small text-muted mt-1">
                     <a href="{{ route('trials.index') }}" class="text-decoration-none text-muted">
-                        Watchdog <i class="bi bi-arrow-right"></i>
+                        {{ __('Watchdog') }} <i class="bi bi-arrow-right"></i>
                     </a>
                 </div>
             </div>
@@ -313,12 +313,12 @@
                     <div>
                         <h5 class="fw-bold mb-1">
                             <i class="bi bi-pie-chart-fill me-2 text-primary" style="color: var(--pri) !important;"></i>
-                            Spending by Category
+                            {{ __('Spending by Category') }}
                         </h5>
-                        <p class="text-muted small mb-0">Monthly budget distribution across categories.</p>
+                        <p class="text-muted small mb-0">{{ __('Monthly budget distribution across categories.') }}</p>
                     </div>
                     <a href="{{ route('analytics.index') }}" class="btn btn-sm btn-theme-secondary">
-                        Deep Analytics <i class="bi bi-arrow-right"></i>
+                        {{ __('Deep Analytics') }} <i class="bi bi-arrow-right"></i>
                     </a>
                 </div>
 

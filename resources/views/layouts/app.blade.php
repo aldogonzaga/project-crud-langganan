@@ -710,14 +710,14 @@
                     <a href="{{ route('dashboard') }}" class="nav-link-custom {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                         <div>
                             <span class="nav-icon"><i class="bi bi-grid-1x2-fill"></i></span>
-                            <span>Dashboard</span>
+                            <span>{{ __('Dashboard') }}</span>
                         </div>
                     </a>
 
                     <a href="{{ route('subscriptions.index') }}" class="nav-link-custom {{ request()->routeIs('subscriptions.index') || request()->routeIs('subscriptions.show') || request()->routeIs('subscriptions.edit') ? 'active' : '' }}">
                         <div>
                             <span class="nav-icon"><i class="bi bi-arrow-repeat"></i></span>
-                            <span>Subscriptions</span>
+                            <span>{{ __('Subscriptions') }}</span>
                         </div>
                         @php
                             $userActiveCount = Auth::user()->subscriptions()->where('status', 'Active')->count();
@@ -728,7 +728,7 @@
                     <a href="{{ route('trials.index') }}" class="nav-link-custom {{ request()->routeIs('trials.index') ? 'active' : '' }}">
                         <div>
                             <span class="nav-icon"><i class="bi bi-hourglass-split"></i></span>
-                            <span>Free Trials</span>
+                            <span>{{ __('Free Trials') }}</span>
                         </div>
                         @php
                             $userTrialCount = Auth::user()->subscriptions()->where('status', 'Free Trial')->count();
@@ -741,14 +741,14 @@
                     <a href="{{ route('analytics.index') }}" class="nav-link-custom {{ request()->routeIs('analytics.index') ? 'active' : '' }}">
                         <div>
                             <span class="nav-icon"><i class="bi bi-pie-chart-fill"></i></span>
-                            <span>Analytics</span>
+                            <span>{{ __('Analytics') }}</span>
                         </div>
                     </a>
 
                     <a href="{{ route('subscriptions.trash') }}" class="nav-link-custom {{ request()->routeIs('subscriptions.trash') ? 'active' : '' }}">
                         <div>
                             <span class="nav-icon"><i class="bi bi-trash3"></i></span>
-                            <span>Trash</span>
+                            <span>{{ __('Trash') }}</span>
                         </div>
                         @php
                             $trashedCount = Auth::user()->subscriptions()->onlyTrashed()->count();
@@ -761,7 +761,7 @@
                     <a href="{{ route('profile.edit') }}" class="nav-link-custom {{ request()->routeIs('profile.edit') ? 'active' : '' }}">
                         <div>
                             <span class="nav-icon"><i class="bi bi-gear-fill"></i></span>
-                            <span>Settings</span>
+                            <span>{{ __('Settings') }}</span>
                         </div>
                     </a>
                 </nav>
@@ -815,7 +815,7 @@
                     <!-- Quick Add Modal Trigger Button -->
                     <button type="button" class="btn-theme" data-bs-toggle="modal" data-bs-target="#quickAddModal" title="Add Subscription (Press N)">
                         <i class="bi bi-plus-lg"></i>
-                        <span>Add Subscription</span>
+                        <span>{{ __('Add Subscription') }}</span>
                         <kbd class="d-none d-lg-inline-block text-white-50 px-1.5 py-0.2 rounded border border-white-50 ms-1" style="font-size: 0.65rem; background: rgba(255,255,255,0.15);">N</kbd>
                     </button>
 
@@ -843,15 +843,15 @@
     <nav class="mobile-bottom-nav">
         <a href="{{ route('dashboard') }}" class="bnav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
             <i class="bi bi-grid-1x2"></i>
-            <span>Home</span>
+            <span>{{ __('Home') }}</span>
         </a>
         <a href="{{ route('subscriptions.index') }}" class="bnav-link {{ request()->routeIs('subscriptions.*') ? 'active' : '' }}">
             <i class="bi bi-arrow-repeat"></i>
-            <span>Subs</span>
+            <span>{{ __('Subs') }}</span>
         </a>
         <button type="button" class="bnav-link border-0 bg-transparent text-primary" data-bs-toggle="modal" data-bs-target="#quickAddModal" style="color: var(--pri) !important;">
             <i class="bi bi-plus-circle-fill fs-3"></i>
-            <span>Add</span>
+            <span>{{ __('Add') }}</span>
         </button>
         <a href="{{ route('trials.index') }}" class="bnav-link {{ request()->routeIs('trials.*') ? 'active' : '' }}">
             <i class="bi bi-hourglass-split"></i>
