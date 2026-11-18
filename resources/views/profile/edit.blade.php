@@ -37,7 +37,7 @@
                     @enderror
                 </div>
 
-                <div class="mb-4">
+                <div class="mb-3">
                     <label for="currency" class="form-label fw-semibold small">Preferred Currency Symbol <span class="text-danger">*</span></label>
                     <select class="form-select form-select-custom @error('currency') is-invalid @enderror" id="currency" name="currency" required>
                         <option value="Rp" {{ old('currency', $user->currency ?? 'Rp') === 'Rp' ? 'selected' : '' }}>IDR (Rp) - Indonesian Rupiah</option>
@@ -48,6 +48,21 @@
                     </select>
                     <div class="form-text small text-muted">All charts, totals, and subscription prices will automatically format using this currency.</div>
                     @error('currency')
+                        <div class="text-danger small mt-1">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-4">
+                    <label for="monthly_budget" class="form-label fw-semibold small">Monthly Budget Limit</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-transparent border-end-0 rounded-start-4 ps-3 fw-bold" style="border-color: var(--bd); color: var(--pri);">
+                            {{ $user->currency }}
+                        </span>
+                        <input type="number" step="any" min="0" class="form-control form-control-custom rounded-end-4 border-start-0 ps-2 @error('monthly_budget') is-invalid @enderror" 
+                               id="monthly_budget" name="monthly_budget" value="{{ old('monthly_budget', $user->monthly_budget) }}" placeholder="e.g. 3000000">
+                    </div>
+                    <div class="form-text small text-muted">Set your maximum monthly spending goal to monitor your remaining budget on the dashboard.</div>
+                    @error('monthly_budget')
                         <div class="text-danger small mt-1">{{ $message }}</div>
                     @enderror
                 </div>
