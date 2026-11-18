@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', 'Dashboard') - SubTrack | Pelacak Langganan</title>
+    <title>@yield('title', 'Dashboard') - keikispace ♡ | Little Money Space</title>
 
     <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,40 +22,44 @@
 
     <style>
         :root {
-            --pri: #4f46e5;
-            --pri-hover: #4338ca;
-            --sec: #eef2ff;
-            --bg: #f8fafc;
+            --pri: #b25575;
+            --pri-hover: #9c4562;
+            --sec: #fce4ec;
+            --bg: #fffbfc;
             --card: #ffffff;
-            --tx: #0f172a;
-            --mu: #64748b;
-            --bd: #e2e8f0;
-            --ok: #10b981;
-            --okb: #ecfdf5;
-            --wa: #f59e0b;
-            --wab: #fffbeb;
-            --da: #ef4444;
-            --dab: #fef2f2;
-            --sh: 0 4px 24px rgba(15, 23, 42, 0.06);
+            --tx: #493942;
+            --mu: #8d8589;
+            --bd: #f3dbe4;
+            --acc: #c77d96;
+            --accd: #a85f79;
+            --ok: #6f9a7e;
+            --okb: #e4f1e8;
+            --wa: #8a6d12;
+            --wab: #fff4c7;
+            --da: #b4475f;
+            --dab: #fbe1e6;
+            --sh: 0 4px 20px rgba(199, 125, 150, 0.12);
             --sidebar-w: 260px;
         }
 
         [data-bs-theme="dark"] {
-            --pri: #6366f1;
-            --pri-hover: #818cf8;
-            --sec: #1e1b4b;
-            --bg: #0b0f19;
-            --card: #131b2e;
-            --tx: #f8fafc;
-            --mu: #94a3b8;
-            --bd: #1e293b;
-            --ok: #34d399;
-            --okb: rgba(16, 185, 129, 0.15);
-            --wa: #fbbf24;
-            --wab: rgba(245, 158, 11, 0.15);
-            --da: #f87171;
-            --dab: rgba(239, 68, 68, 0.15);
-            --sh: 0 4px 24px rgba(0, 0, 0, 0.35);
+            --pri: #b25575;
+            --pri-hover: #c9688c;
+            --sec: #3a2a33;
+            --bg: #1f171b;
+            --card: #2a2026;
+            --tx: #f6e9ee;
+            --mu: #b9a9b0;
+            --bd: #4a3640;
+            --acc: #e8a1ba;
+            --accd: #f3b8cd;
+            --ok: #9fd1b0;
+            --okb: #243a2d;
+            --wa: #f0d77a;
+            --wab: #40361a;
+            --da: #f29aab;
+            --dab: #43232c;
+            --sh: 0 4px 24px rgba(0, 0, 0, 0.4);
         }
 
         * {
@@ -73,16 +77,21 @@
             transition: background-color 0.25s ease, color 0.25s ease;
         }
 
-        /* Subtle background glow */
+        /* KeikiSpace subtle background glow */
         body::before {
             content: "";
             position: fixed;
             inset: 0;
             z-index: -1;
             pointer-events: none;
-            opacity: 0.6;
-            background: radial-gradient(circle at 92% 4%, rgba(79, 70, 229, 0.08), transparent 32%),
-                        radial-gradient(circle at 4% 88%, rgba(14, 165, 233, 0.08), transparent 35%);
+            opacity: 0.65;
+            background: radial-gradient(circle at 92% 4%, rgba(199, 125, 150, 0.18), transparent 32%),
+                        radial-gradient(circle at 4% 88%, rgba(252, 228, 236, 0.22), transparent 35%);
+        }
+
+        [data-bs-theme="dark"] body::before {
+            background: radial-gradient(circle at 92% 4%, rgba(178, 85, 117, 0.26), transparent 35%),
+                        radial-gradient(circle at 4% 88%, rgba(143, 77, 104, 0.22), transparent 38%);
         }
 
         /* Layout structure */
@@ -110,13 +119,18 @@
         .sidebar-brand {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 0 10px 24px;
+            gap: 8px;
+            padding: 0 8px 24px;
             text-decoration: none;
             color: var(--tx);
-            font-size: 1.25rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
+            font-size: 1.32rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            transition: color 0.2s ease;
+        }
+
+        .sidebar-brand:hover {
+            color: var(--acc);
         }
 
         .brand-icon {
@@ -161,7 +175,7 @@
         .nav-link-custom.active {
             background-color: var(--pri);
             color: #ffffff;
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+            box-shadow: 0 4px 12px rgba(178, 85, 117, 0.25);
         }
 
         .nav-link-custom.active .badge-count {
@@ -400,7 +414,7 @@
             align-items: center;
             gap: 8px;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+            box-shadow: 0 4px 12px rgba(178, 85, 117, 0.25);
             text-decoration: none;
             cursor: pointer;
         }
@@ -409,7 +423,7 @@
             background: var(--pri-hover);
             color: #ffffff;
             transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+            box-shadow: 0 6px 16px rgba(178, 85, 117, 0.35);
         }
 
         .btn-theme-secondary {
@@ -687,10 +701,8 @@
             <div>
                 <!-- Brand Logo -->
                 <a href="{{ route('dashboard') }}" class="sidebar-brand">
-                    <div class="brand-icon">
-                        <i class="bi bi-wallet2"></i>
-                    </div>
-                    <span>SubTrack</span>
+                    <span style="font-size: 1.35rem;">🌸</span>
+                    <span>keikispace <span style="color: var(--acc); font-weight: 300;">♡</span></span>
                 </a>
 
                 <!-- Navigation Links -->
@@ -1039,6 +1051,7 @@
     <script>
         function applyTheme(theme) {
             document.documentElement.setAttribute('data-bs-theme', theme);
+            localStorage.setItem('keikispace-theme', theme);
             localStorage.setItem('subtrack-theme', theme);
 
             const icon = document.getElementById('theme-icon');
@@ -1057,14 +1070,14 @@
         }
 
         function toggleTheme() {
-            const current = document.documentElement.getAttribute('data-bs-theme') || 'light';
+            const current = document.documentElement.getAttribute('data-bs-theme') || 'dark';
             const next = current === 'dark' ? 'light' : 'dark';
             applyTheme(next);
             showToast('Theme Updated', `Switched to ${next} mode.`, 'info');
         }
 
-        // Initialize Theme
-        const savedTheme = localStorage.getItem('subtrack-theme') || 'light';
+        // Initialize Theme (Defaults to dark mode to match the KeikiSpace aesthetic)
+        const savedTheme = localStorage.getItem('keikispace-theme') || localStorage.getItem('subtrack-theme') || 'dark';
         applyTheme(savedTheme);
 
         // Toast System

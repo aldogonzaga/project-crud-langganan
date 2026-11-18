@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', 'Sign In') - SubTrack | Pelacak Langganan</title>
+    <title>@yield('title', 'Sign In') - keikispace ♡ | Little Money Space</title>
 
     <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,34 +18,38 @@
 
     <style>
         :root {
-            --pri: #4f46e5;
-            --pri-hover: #4338ca;
-            --sec: #eef2ff;
-            --bg: #f8fafc;
+            --pri: #b25575;
+            --pri-hover: #9c4562;
+            --sec: #fce4ec;
+            --bg: #fffbfc;
             --card: #ffffff;
-            --tx: #0f172a;
-            --mu: #64748b;
-            --bd: #e2e8f0;
-            --ok: #10b981;
-            --okb: #ecfdf5;
-            --da: #ef4444;
-            --dab: #fef2f2;
-            --sh: 0 12px 40px rgba(15, 23, 42, 0.08);
+            --tx: #493942;
+            --mu: #8d8589;
+            --bd: #f3dbe4;
+            --acc: #c77d96;
+            --accd: #a85f79;
+            --ok: #6f9a7e;
+            --okb: #e4f1e8;
+            --da: #b4475f;
+            --dab: #fbe1e6;
+            --sh: 0 12px 40px rgba(199, 125, 150, 0.15);
         }
 
         [data-bs-theme="dark"] {
-            --pri: #6366f1;
-            --pri-hover: #818cf8;
-            --sec: #1e1b4b;
-            --bg: #0b0f19;
-            --card: #131b2e;
-            --tx: #f8fafc;
-            --mu: #94a3b8;
-            --bd: #1e293b;
-            --ok: #34d399;
-            --okb: rgba(16, 185, 129, 0.15);
-            --da: #f87171;
-            --dab: rgba(239, 68, 68, 0.15);
+            --pri: #b25575;
+            --pri-hover: #c9688c;
+            --sec: #3a2a33;
+            --bg: #1f171b;
+            --card: #2a2026;
+            --tx: #f6e9ee;
+            --mu: #b9a9b0;
+            --bd: #4a3640;
+            --acc: #e8a1ba;
+            --accd: #f3b8cd;
+            --ok: #9fd1b0;
+            --okb: #243a2d;
+            --da: #f29aab;
+            --dab: #43232c;
             --sh: 0 12px 40px rgba(0, 0, 0, 0.45);
         }
 
@@ -68,9 +72,14 @@
             inset: 0;
             z-index: -1;
             pointer-events: none;
-            opacity: 0.7;
-            background: radial-gradient(circle at 15% 20%, rgba(79, 70, 229, 0.1), transparent 45%),
-                        radial-gradient(circle at 85% 80%, rgba(6, 182, 212, 0.1), transparent 45%);
+            opacity: 0.65;
+            background: radial-gradient(circle at 15% 20%, rgba(199, 125, 150, 0.2), transparent 45%),
+                        radial-gradient(circle at 85% 80%, rgba(252, 228, 236, 0.25), transparent 45%);
+        }
+
+        [data-bs-theme="dark"] body::before {
+            background: radial-gradient(circle at 15% 20%, rgba(178, 85, 117, 0.28), transparent 45%),
+                        radial-gradient(circle at 85% 80%, rgba(143, 77, 104, 0.22), transparent 45%);
         }
 
         .auth-container {
@@ -198,10 +207,8 @@
     <div class="auth-container">
         <!-- Brand Logo -->
         <a href="{{ route('home') }}" class="brand-logo-center">
-            <div class="brand-icon-large">
-                <i class="bi bi-wallet2"></i>
-            </div>
-            <span>SubTrack</span>
+            <span style="font-size: 1.6rem;">🌸</span>
+            <span>keikispace <span style="color: var(--acc); font-weight: 300;">♡</span></span>
         </a>
 
         <!-- Auth Card -->
@@ -210,7 +217,7 @@
         </div>
 
         <div class="text-center mt-4 text-muted small">
-            &copy; {{ date('Y') }} SubTrack &bull; Pelacak Langganan & Uji Coba Gratis
+            &copy; {{ date('Y') }} keikispace ♡ &bull; Little Money Space
         </div>
     </div>
 
@@ -220,6 +227,7 @@
     <script>
         function applyTheme(theme) {
             document.documentElement.setAttribute('data-bs-theme', theme);
+            localStorage.setItem('keikispace-theme', theme);
             localStorage.setItem('subtrack-theme', theme);
 
             const icon = document.getElementById('theme-icon');
@@ -235,12 +243,12 @@
         }
 
         function toggleTheme() {
-            const current = document.documentElement.getAttribute('data-bs-theme') || 'light';
+            const current = document.documentElement.getAttribute('data-bs-theme') || 'dark';
             const next = current === 'dark' ? 'light' : 'dark';
             applyTheme(next);
         }
 
-        const savedTheme = localStorage.getItem('subtrack-theme') || 'light';
+        const savedTheme = localStorage.getItem('keikispace-theme') || localStorage.getItem('subtrack-theme') || 'dark';
         applyTheme(savedTheme);
     </script>
 </body>

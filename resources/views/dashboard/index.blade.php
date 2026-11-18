@@ -1,102 +1,100 @@
 @extends('layouts.app')
 
 @section('title', 'Dashboard')
-@section('page_title', 'Subscription Dashboard')
-@section('page_subtitle', 'Real-time overview of your recurring expenses, renewals, and free trials.')
+@section('page_title', 'Dashboard')
+@section('page_subtitle', 'Welcome to your little money space ♡')
 
 @section('content')
-    <!-- Top Metrics Overview Grid -->
-    <div class="row g-3 mb-4">
-        <!-- Metric 1: Total Monthly Spend -->
-        <div class="col-12 col-sm-6 col-xl-3">
+    <!-- Top Metrics Overview Grid (KeikiSpace 5-Card Layout) -->
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-5 g-3 mb-4">
+        <!-- 1. Monthly spending -->
+        <div class="col">
             <div class="metric-card h-100">
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="metric-label">Total Monthly Spend</span>
-                    <div class="metric-icon-box" style="background: var(--sec); color: var(--pri);">
-                        <i class="bi bi-wallet2"></i>
-                    </div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="metric-label">Monthly spending</span>
+                    <span style="font-size: 1.15rem;">🌸</span>
                 </div>
-                <div>
-                    <div class="metric-value text-primary" style="color: var(--pri) !important;">
-                        {{ $user->formatCurrency($totalMonthlySpend) }}
-                    </div>
-                    <div class="small text-muted d-flex align-items-center gap-1">
-                        <i class="bi bi-calendar3"></i>
-                        <span>Est. {{ $user->formatCurrency($totalYearlySpend) }}/year</span>
-                    </div>
+                <div class="metric-value" style="color: var(--tx);">
+                    {{ $user->formatCurrency($totalMonthlySpend) }}
+                </div>
+                <div class="small text-muted mt-1">
+                    Est. {{ $user->formatCurrency($totalYearlySpend) }}/yr
                 </div>
             </div>
         </div>
 
-        <!-- Metric 2: Active Subscriptions -->
-        <div class="col-12 col-sm-6 col-xl-3">
+        <!-- 2. Remaining budget -->
+        <div class="col">
             <div class="metric-card h-100">
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="metric-label">Active Services</span>
-                    <div class="metric-icon-box" style="background: var(--okb); color: var(--ok);">
-                        <i class="bi bi-arrow-repeat"></i>
-                    </div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="metric-label">Remaining budget</span>
+                    <span style="font-size: 1.15rem;">🌷</span>
                 </div>
-                <div>
-                    <div class="metric-value text-success" style="color: var(--ok) !important;">
-                        {{ $activeSubscriptions->count() }}
-                    </div>
-                    <div class="small text-muted d-flex align-items-center gap-1">
-                        <a href="{{ route('subscriptions.index', ['status' => 'Active']) }}" class="text-decoration-none text-muted">
-                            View active list <i class="bi bi-arrow-right"></i>
-                        </a>
-                    </div>
+                <div class="metric-value {{ $budgetRemaining < 0 ? 'text-danger' : '' }}" style="color: {{ $budgetRemaining < 0 ? 'var(--da)' : 'var(--tx)' }};">
+                    {{ $user->formatCurrency(max(0, $budgetRemaining)) }}
+                </div>
+                <div class="small text-muted mt-1">
+                    @if($budgetRemaining < 0)
+                        <span class="text-danger fw-bold">Over by {{ $user->formatCurrency(abs($budgetRemaining)) }}</span>
+                    @else
+                        <span>Limit: {{ $user->formatCurrency($monthlyBudget) }}</span>
+                    @endif
                 </div>
             </div>
         </div>
 
-        <!-- Metric 3: Active Free Trials -->
-        <div class="col-12 col-sm-6 col-xl-3">
-            <div class="metric-card h-100 {{ $trialsEndingSoon->where('days_until_due', '<=', 3)->count() > 0 ? 'card-critical' : '' }}">
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="metric-label">Free Trials</span>
-                    <div class="metric-icon-box" style="background: var(--wab); color: var(--wa);">
-                        <i class="bi bi-hourglass-split"></i>
-                    </div>
+        <!-- 3. Active subscriptions -->
+        <div class="col">
+            <div class="metric-card h-100">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="metric-label">Active subscriptions</span>
+                    <span style="font-size: 1.15rem;">🗓️</span>
                 </div>
-                <div>
-                    <div class="metric-value text-warning" style="color: var(--wa) !important;">
-                        {{ $freeTrials->count() }}
-                    </div>
-                    <div class="small text-muted d-flex align-items-center gap-1">
-                        @php
-                            $endingCritical = $trialsEndingSoon->where('days_until_due', '<=', 3)->count();
-                        @endphp
-                        @if($endingCritical > 0)
-                            <span class="text-danger fw-bold"><i class="bi bi-exclamation-circle-fill"></i> {{ $endingCritical }} ending in ≤ 3 days!</span>
-                        @else
-                            <span>Manage before renewal</span>
-                        @endif
-                    </div>
+                <div class="metric-value" style="color: var(--tx);">
+                    {{ $activeSubscriptions->count() }} <span class="fs-6 fw-semibold text-muted">&bull; {{ $user->formatCurrency($totalMonthlySpend) }}/mo</span>
+                </div>
+                <div class="small text-muted mt-1">
+                    <a href="{{ route('subscriptions.index', ['status' => 'Active']) }}" class="text-decoration-none text-muted">
+                        View all <i class="bi bi-arrow-right"></i>
+                    </a>
                 </div>
             </div>
         </div>
 
-        <!-- Metric 4: Due in 7 Days -->
-        <div class="col-12 col-sm-6 col-xl-3">
+        <!-- 4. Upcoming bills -->
+        <div class="col">
             <div class="metric-card h-100 {{ $criticalPaymentsCount > 0 ? 'card-critical' : '' }}">
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="metric-label">Due Next 7 Days</span>
-                    <div class="metric-icon-box" style="background: {{ $criticalPaymentsCount > 0 ? 'var(--dab)' : 'var(--sec)' }}; color: {{ $criticalPaymentsCount > 0 ? 'var(--da)' : 'var(--pri)' }};">
-                        <i class="bi bi-bell-fill"></i>
-                    </div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="metric-label">Upcoming bills</span>
+                    <span style="font-size: 1.15rem;">🗓️</span>
                 </div>
-                <div>
-                    <div class="metric-value {{ $criticalPaymentsCount > 0 ? 'text-danger' : '' }}" style="{{ $criticalPaymentsCount > 0 ? 'color: var(--da) !important;' : '' }}">
-                        {{ $upcomingPayments->count() }}
-                    </div>
-                    <div class="small text-muted d-flex align-items-center gap-1">
-                        @if($criticalPaymentsCount > 0)
-                            <span class="text-danger fw-bold"><i class="bi bi-fire"></i> {{ $criticalPaymentsCount }} due within 3 days!</span>
-                        @else
-                            <span>No urgent bills due</span>
-                        @endif
-                    </div>
+                <div class="metric-value {{ $criticalPaymentsCount > 0 ? 'text-danger' : '' }}" style="{{ $criticalPaymentsCount > 0 ? 'color: var(--da) !important;' : 'color: var(--tx);' }}">
+                    {{ $upcomingPayments->count() }}
+                </div>
+                <div class="small text-muted mt-1">
+                    @if($criticalPaymentsCount > 0)
+                        <span class="text-danger fw-bold">{{ $criticalPaymentsCount }} due in &le; 3 days!</span>
+                    @else
+                        <span>Next 7 days</span>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Ongoing free trials -->
+        <div class="col">
+            <div class="metric-card h-100 {{ $trialsEndingSoon->where('days_until_due', '<=', 3)->count() > 0 ? 'card-critical' : '' }}">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="metric-label">Ongoing free trials</span>
+                    <span style="font-size: 1.15rem;">⌛</span>
+                </div>
+                <div class="metric-value" style="color: var(--tx);">
+                    {{ $freeTrials->count() }}
+                </div>
+                <div class="small text-muted mt-1">
+                    <a href="{{ route('trials.index') }}" class="text-decoration-none text-muted">
+                        Watchdog <i class="bi bi-arrow-right"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -529,13 +527,13 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const isDarkMode = document.documentElement.getAttribute('data-bs-theme') === 'dark';
-        const textColor = isDarkMode ? '#f8fafc' : '#0f172a';
+        const textColor = isDarkMode ? '#f6e9ee' : '#493942';
 
-        // 1. Category Donut Chart
+        // 1. Category Donut Chart (KeikiSpace Palette)
         const catLabels = @json(array_keys($categoryBreakdown));
         const catData = @json(array_values($categoryBreakdown));
         const catColors = [
-            '#6366f1', '#0ea5e9', '#10b981', '#8b5cf6', '#f59e0b', '#ec4899', '#14b8a6', '#94a3b8'
+            '#b25575', '#e8a1ba', '#f3b8cd', '#9fd1b0', '#f0d77a', '#7db5b8', '#d69bb8', '#b9a9b0'
         ];
 
         const donutCanvas = document.getElementById('categoryDonutChart');
@@ -548,7 +546,7 @@
                         data: catData,
                         backgroundColor: catColors.slice(0, catLabels.length),
                         borderWidth: 2,
-                        borderColor: isDarkMode ? '#131b2e' : '#ffffff',
+                        borderColor: isDarkMode ? '#2a2026' : '#ffffff',
                         hoverOffset: 4
                     }]
                 },
@@ -570,7 +568,7 @@
             });
         }
 
-        // 2. Billing Cycle Bar Chart
+        // 2. Billing Cycle Bar Chart (KeikiSpace Palette)
         const cycleCanvas = document.getElementById('cycleBarChart');
         if (cycleCanvas) {
             new Chart(cycleCanvas, {
@@ -584,7 +582,7 @@
                             {{ $cycleBreakdown['Yearly'] }},
                             {{ $cycleBreakdown['Weekly'] }}
                         ],
-                        backgroundColor: ['#6366f1', '#10b981', '#f59e0b'],
+                        backgroundColor: ['#b25575', '#9fd1b0', '#f0d77a'],
                         borderRadius: 8,
                     }]
                 },
@@ -597,11 +595,11 @@
                     scales: {
                         y: {
                             beginAtZero: true,
-                            ticks: { stepSize: 1, color: isDarkMode ? '#94a3b8' : '#64748b' },
+                            ticks: { stepSize: 1, color: isDarkMode ? '#b9a9b0' : '#8d8589' },
                             grid: { color: isDarkMode ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' }
                         },
                         x: {
-                            ticks: { color: isDarkMode ? '#94a3b8' : '#64748b' },
+                            ticks: { color: isDarkMode ? '#b9a9b0' : '#8d8589' },
                             grid: { display: false }
                         }
                     }

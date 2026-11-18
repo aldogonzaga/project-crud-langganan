@@ -239,7 +239,7 @@
                         data: catValues,
                         backgroundColor: catColors,
                         borderWidth: 2,
-                        borderColor: isDarkMode ? '#131b2e' : '#ffffff',
+                        borderColor: isDarkMode ? '#2a2026' : '#ffffff',
                         hoverOffset: 6
                     }]
                 },
@@ -275,7 +275,7 @@
                             {{ $cycleData['Yearly']['count'] }},
                             {{ $cycleData['Weekly']['count'] }}
                         ],
-                        backgroundColor: ['#6366f1', '#10b981', '#f59e0b'],
+                        backgroundColor: ['#b25575', '#9fd1b0', '#f0d77a'],
                         borderRadius: 8
                     }]
                 },
@@ -288,11 +288,11 @@
                     scales: {
                         y: {
                             beginAtZero: true,
-                            ticks: { stepSize: 1, color: isDarkMode ? '#94a3b8' : '#64748b' },
+                            ticks: { stepSize: 1, color: isDarkMode ? '#b9a9b0' : '#8d8589' },
                             grid: { color: isDarkMode ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' }
                         },
                         x: {
-                            ticks: { color: isDarkMode ? '#94a3b8' : '#64748b' },
+                            ticks: { color: isDarkMode ? '#b9a9b0' : '#8d8589' },
                             grid: { display: false }
                         }
                     }

@@ -25,14 +25,14 @@ class AnalyticsController extends Controller
         $categories = ['Entertainment', 'Utilities', 'Health', 'Work', 'Education', 'Food', 'Shopping', 'Others'];
         $categoryData = [];
         $categoryColors = [
-            'Entertainment' => '#6366f1', // Indigo
-            'Utilities' => '#0ea5e9',     // Sky Blue
-            'Health' => '#10b981',        // Emerald
-            'Work' => '#8b5cf6',          // Purple
-            'Education' => '#f59e0b',     // Amber
-            'Food' => '#ec4899',          // Rose
-            'Shopping' => '#14b8a6',      // Teal
-            'Others' => '#94a3b8',        // Slate
+            'Entertainment' => '#b25575', // KeikiSpace Rose
+            'Utilities' => '#7db5b8',     // Pastel Teal
+            'Health' => '#9fd1b0',        // Pastel Sage
+            'Work' => '#e8a1ba',          // Soft Pink
+            'Education' => '#f0d77a',     // Pastel Gold
+            'Food' => '#f3b8cd',          // Blush Pink
+            'Shopping' => '#c77d96',      // Mauve
+            'Others' => '#b9a9b0',        // Muted Plum
         ];
 
         foreach ($categories as $cat) {
