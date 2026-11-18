@@ -333,14 +333,14 @@
                             <div class="d-flex flex-column gap-2">
                                 @php
                                     $catPalette = [
-                                        'Entertainment' => '#6366f1',
-                                        'Utilities' => '#0ea5e9',
-                                        'Health' => '#10b981',
-                                        'Work' => '#8b5cf6',
-                                        'Education' => '#f59e0b',
-                                        'Food' => '#ec4899',
-                                        'Shopping' => '#14b8a6',
-                                        'Others' => '#94a3b8',
+                                        'Entertainment' => '#d95d85', // Berry Rose
+                                        'Utilities'     => '#5c9fb8', // Soft Muted Blue
+                                        'Health'        => '#73b38c', // Cozy Sage Green
+                                        'Work'          => '#9c7bb8', // Soft Lavender
+                                        'Food'          => '#e88d67', // Pastel Coral / Peach
+                                        'Shopping'      => '#e3b15b', // Warm Amber / Honey
+                                        'Education'     => '#4ea59f', // Soft Seafoam / Jade
+                                        'Others'        => '#a89ba2', // Warm Dusty Mauve
                                     ];
                                 @endphp
                                 @foreach($categoryBreakdown as $catName => $amount)
@@ -529,12 +529,20 @@
         const isDarkMode = document.documentElement.getAttribute('data-bs-theme') === 'dark';
         const textColor = isDarkMode ? '#f6e9ee' : '#493942';
 
-        // 1. Category Donut Chart (KeikiSpace Palette)
+        // 1. Category Donut Chart (KeikiSpace Unified Palette)
         const catLabels = @json(array_keys($categoryBreakdown));
         const catData = @json(array_values($categoryBreakdown));
-        const catColors = [
-            '#b25575', '#e8a1ba', '#f3b8cd', '#9fd1b0', '#f0d77a', '#7db5b8', '#d69bb8', '#b9a9b0'
-        ];
+        const catPaletteMap = {
+            'Entertainment': '#d95d85', // Berry Rose
+            'Utilities':     '#5c9fb8', // Soft Muted Blue
+            'Health':        '#73b38c', // Cozy Sage Green
+            'Work':          '#9c7bb8', // Soft Lavender
+            'Food':          '#e88d67', // Pastel Coral / Peach
+            'Shopping':      '#e3b15b', // Warm Amber / Honey
+            'Education':     '#4ea59f', // Soft Seafoam / Jade
+            'Others':        '#a89ba2'  // Warm Dusty Mauve
+        };
+        const catColors = catLabels.map(label => catPaletteMap[label] || '#a89ba2');
 
         const donutCanvas = document.getElementById('categoryDonutChart');
         if (donutCanvas && catData.length > 0) {
@@ -544,7 +552,7 @@
                     labels: catLabels,
                     datasets: [{
                         data: catData,
-                        backgroundColor: catColors.slice(0, catLabels.length),
+                        backgroundColor: catColors,
                         borderWidth: 2,
                         borderColor: isDarkMode ? '#2a2026' : '#ffffff',
                         hoverOffset: 4
